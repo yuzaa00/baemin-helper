@@ -17,9 +17,9 @@ export default function Index() {
     <HStack justifyContent='center' m='24'>
       <VStack css={{ maxWidth: '640px' }} gap='16'>
         <Text variant='heading1'>{shop_info.Shop_Nm}</Text>
-        <Tabs.Root defaultValue='추천'>
+        <Tabs.Root defaultValue='대표 메뉴'>
           <Tabs.List variant='default'>
-            <Tabs.Trigger value='추천'>추천</Tabs.Trigger>
+            <Tabs.Trigger value='대표 메뉴'>대표 메뉴</Tabs.Trigger>
             {shop_menu.menu_ord.normal.map((menu, index) => (
               <Tabs.Trigger
                 value={menu.Shop_Food_Grp_Nm}
@@ -29,7 +29,7 @@ export default function Index() {
               </Tabs.Trigger>
             ))}
           </Tabs.List>
-          <Tabs.Content value='추천'>
+          <Tabs.Content value='대표 메뉴'>
             {shop_menu.menu_ord.rec.map(menu => (
               <Menu menu={menu} key={menu.Shop_Food_Seq} />
             ))}
