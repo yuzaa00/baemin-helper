@@ -1,32 +1,51 @@
+import { useLoaderData } from 'remix';
+import { getMenu, MenuData } from '~/menu';
+import { VStack, Text, HStack, Tabs, Image } from '@dano-inc/design-system';
+import Menu from '~/features/menu/components/Menu';
+
+export const loader = async () => {
+  const response = await getMenu();
+  if (response.status !== 'SUCCESS') throw Error;
+  return response.data;
+};
+
 export default function Index() {
+  const posts = useLoaderData<MenuData>();
+  const { shop_info, shop_menu } = posts;
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <HStack justifyContent='center' m='24'>
+      <VStack css={{ maxWidth: '640px' }} gap='16'>
+        <Text variant='heading1'>{shop_info.Shop_Nm}</Text>
+        <Tabs.Root defaultValue='추천'>
+          <Tabs.List variant='default'>
+            <Tabs.Trigger value='추천'>추천</Tabs.Trigger>
+            {shop_menu.menu_ord.normal.map((menu, index) => (
+              <Tabs.Trigger
+                value={menu.Shop_Food_Grp_Nm}
+                key={`tabs-${index}-${menu.Shop_Food_Grp_Nm}`}
+              >
+                {menu.Shop_Food_Grp_Nm}
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
+          <Tabs.Content value='추천'>
+            {shop_menu.menu_ord.rec.map(menu => (
+              <Menu menu={menu} key={menu.Shop_Food_Seq} />
+            ))}
+          </Tabs.Content>
+          {shop_menu.menu_ord.normal.map((menu, index) => (
+            <Tabs.Content
+              value={menu.Shop_Food_Grp_Nm}
+              key={`content-${index}-${menu.Shop_Food_Grp_Nm}`}
+            >
+              {menu.List_Shop_Food.map(subMenu => (
+                <Menu menu={subMenu} key={subMenu.Shop_Food_Seq} />
+              ))}
+            </Tabs.Content>
+          ))}
+        </Tabs.Root>
+      </VStack>
+    </HStack>
   );
 }
