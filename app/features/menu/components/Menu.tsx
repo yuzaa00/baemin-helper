@@ -1,4 +1,4 @@
-import { HStack, VStack, Text, Image } from '@dano-inc/design-system';
+import { HStack, VStack, Text, Image, HDivider } from '@dano-inc/design-system';
 import { SingleMenuData } from '~/menu';
 
 export interface MenuProps {
@@ -27,44 +27,50 @@ export default function Menu({ menu }: MenuProps) {
           <Text variant='paragraph4' wordBreak='keepAll'>
             {menu.Food_Cont}
           </Text>
-          {/** 금액 */}
+          {/** 옵션별 금액 */}
           {menu.List_Shop_Food_Price_Grp.map((price, index) => (
-            <HStack key={`price-${index}-${price.Shop_Food_Seq}`}>
-              <VStack css={{ flex: 0.5 }} mr='12'>
-                <Text variant='heading6' wordBreak='keepAll'>
-                  {price.Shop_Food_Price_Grp_Nm}
-                </Text>
-                {price.Def_Price_Yn === 'N' && (
-                  <VStack>
-                    <Text variant='small'>{`최소 ${price.Min_Sel}개`}</Text>
-                    <Text variant='small'>{`최대 ${price.Max_Sel}개`}</Text>
-                  </VStack>
-                )}
-              </VStack>
-              <VStack gap='4' css={{ flex: 2 }}>
-                {price.List_Shop_Food_Price.map(subPrice => (
-                  <HStack key={subPrice.Shop_Food_Price_Seq}>
-                    <HStack css={{ flex: 1 }}>
-                      <Text variant='paragraph1' wordBreak='keepAll'>
-                        {subPrice.Food_Price_Nm}
-                      </Text>
-                      {subPrice.Sold_Out && (
-                        <Text
-                          variant='paragraph1'
-                          textColor='error'
-                          ml={price.Def_Price_Yn === 'N' ? '8' : undefined}
-                        >
-                          품절
+            <>
+              <HStack key={`price-${index}-${price.Shop_Food_Seq}`}>
+                <VStack css={{ flex: 0.5 }} mr='12'>
+                  <Text variant='heading6' wordBreak='keepAll'>
+                    {price.Shop_Food_Price_Grp_Nm}
+                  </Text>
+                  {price.Def_Price_Yn === 'N' && (
+                    <VStack>
+                      <Text variant='small'>{`최소 ${price.Min_Sel}개`}</Text>
+                      <Text variant='small'>{`최대 ${price.Max_Sel}개`}</Text>
+                    </VStack>
+                  )}
+                </VStack>
+                <VStack gap='4' css={{ flex: 2 }}>
+                  {price.List_Shop_Food_Price.map(subPrice => (
+                    <HStack key={subPrice.Shop_Food_Price_Seq}>
+                      <HStack css={{ flex: 1 }}>
+                        <Text variant='paragraph1' wordBreak='keepAll'>
+                          {subPrice.Food_Price_Nm}
                         </Text>
-                      )}
+                        {subPrice.Sold_Out && (
+                          <Text
+                            variant='paragraph1'
+                            textColor='error'
+                            ml={price.Def_Price_Yn === 'N' ? '8' : undefined}
+                          >
+                            품절
+                          </Text>
+                        )}
+                      </HStack>
+                      <Text variant='paragraph1' wordBreak='keepAll'>
+                        {price.Def_Price_Yn === 'N' && '+ '}
+                        {subPrice.Food_Price}
+                      </Text>
                     </HStack>
-                    <Text variant='paragraph1' wordBreak='keepAll'>
-                      {subPrice.Food_Price}
-                    </Text>
-                  </HStack>
-                ))}
-              </VStack>
-            </HStack>
+                  ))}
+                </VStack>
+              </HStack>
+              {index !== menu.List_Shop_Food_Price_Grp.length - 1 && (
+                <HDivider />
+              )}
+            </>
           ))}
         </VStack>
         <VStack css={{ flex: 1 }}>
