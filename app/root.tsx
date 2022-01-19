@@ -18,6 +18,7 @@ const resetStyle = globalCss({
 
   a: {
     textDecoration: 'none',
+    all: 'unset',
   },
 
   'html, body': {
@@ -43,7 +44,10 @@ export default function App() {
     <html lang='ko'>
       <head>
         <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width,initial-scale=1' />
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+        />
         <Meta />
         <Links />
       </head>
