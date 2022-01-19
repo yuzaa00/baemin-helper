@@ -24,6 +24,12 @@ const resetStyle = globalCss({
     minHeight: '100vh',
   },
 
+  button: {
+    background: 'none',
+    padding: 'none',
+    border: 'none',
+  },
+
   '*': {
     fontFamily: `'Noto Sans KR', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif`,
     letterSpacing: '-0.01em',
