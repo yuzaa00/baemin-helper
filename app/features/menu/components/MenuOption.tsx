@@ -1,82 +1,117 @@
-import { HStack, VStack, Text, Image, HDivider } from '@dano-inc/design-system';
+import {
+  HStack,
+  VStack,
+  Text,
+  HDivider,
+  IconButton,
+  Box,
+} from '@dano-inc/design-system';
+import { LineIconArrowLeft, LineIconShare } from '@dano-inc/react-icons';
 import { SingleMenuData } from '~/getMenu';
+import { useNavigate } from 'remix';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import ShareButton from '~/features/common/components/ShareButton';
 
-export interface MenuProps {
-  menu: SingleMenuData;
+export interface MenuOptionProps {
+  option: SingleMenuData;
+  url: string;
 }
 
-export default function Menu({ menu }: MenuProps) {
+export default function MenuOption({ option, url }: MenuOptionProps) {
+  const navigate = useNavigate();
+
+  const handleArrowClick = () => {
+    navigate(-1);
+  };
+
   return (
-    <VStack
-      p='20'
-      mt='20'
-      gap='20'
-      css={{ borderRadius: '$small' }}
-      bgColor='gray1'
-    >
-      <HStack gap='20'>
-        <VStack gap='12' css={{ flex: 1.5 }}>
-          <HStack>
-            <Text variant='heading5'>{menu.Food_Nm}</Text>
-            {menu.Sold_Out && (
-              <Text variant='heading5' ml='4' textColor='error'>
-                품절
-              </Text>
-            )}
-          </HStack>
-          <Text variant='paragraph4' wordBreak='keepAll'>
-            {menu.Food_Cont}
+    <VStack gap='16'>
+      <HStack pos='relative' css={{ width: '100%' }}>
+        <IconButton
+          pos='absolute'
+          css={{ top: 0, left: 0 }}
+          onClick={handleArrowClick}
+        >
+          <LineIconArrowLeft />
+        </IconButton>
+        <VStack alignItems='center'>
+          <Text
+            variant='heading3'
+            css={{ maxWidth: '200px' }}
+            textAlign='center'
+            wordBreak='keepAll'
+          >
+            {option.Food_Nm}
           </Text>
-          {/** 옵션별 금액 */}
-          {menu.List_Shop_Food_Price_Grp.map((price, index) => (
-            <>
-              <HStack key={`price-${index}-${price.Shop_Food_Seq}`}>
-                <VStack css={{ flex: 0.5 }} mr='12'>
+        </VStack>
+        <ShareButton url={url} />
+      </HStack>
+      <VStack gap='12' css={{ flex: 1.5 }} px='16'>
+        <Text variant='paragraph4' wordBreak='keepAll'>
+          {option.Food_Cont}
+        </Text>
+        {option.List_Shop_Food_Price_Grp.map((price, index) => (
+          <Box key={`price-${index}-${price.Shop_Food_Seq}`}>
+            {price.Def_Price_Yn === 'Y' ? (
+              <VStack>
+                <HStack py='8' justifyContent='spaceBetween'>
                   <Text variant='heading6' wordBreak='keepAll'>
                     {price.Shop_Food_Price_Grp_Nm}
                   </Text>
-                  {price.Def_Price_Yn === 'N' && (
-                    <VStack>
-                      <Text variant='small'>{`최소 ${price.Min_Sel}개`}</Text>
-                      <Text variant='small'>{`최대 ${price.Max_Sel}개`}</Text>
-                    </VStack>
+                  <Text variant='paragraph1' wordBreak='keepAll'>
+                    {`${price.List_Shop_Food_Price[0].Food_Price} 원`}
+                  </Text>
+                </HStack>
+                <HDivider />
+              </VStack>
+            ) : (
+              <VStack gap='10'>
+                <HStack pt='10' alignItems='center'>
+                  <Text variant='heading6' wordBreak='keepAll' mr='6'>
+                    {price.Shop_Food_Price_Grp_Nm}
+                  </Text>
+                  {Number(price.Min_Sel) > 0 && (
+                    <Text
+                      variant='small'
+                      mr='4'
+                      textColor='error'
+                    >{`필수 ${price.Min_Sel}개`}</Text>
                   )}
-                </VStack>
+                  {Number(price.Min_Sel) !== Number(price.Max_Sel) && (
+                    <Text variant='small'>{`최대 ${price.Max_Sel}개`}</Text>
+                  )}
+                </HStack>
                 <VStack gap='4' css={{ flex: 2 }}>
                   {price.List_Shop_Food_Price.map(subPrice => (
-                    <HStack key={subPrice.Shop_Food_Price_Seq}>
-                      <HStack css={{ flex: 1 }}>
-                        <Text variant='paragraph1' wordBreak='keepAll'>
-                          {subPrice.Food_Price_Nm}
-                        </Text>
-                        {subPrice.Sold_Out && (
-                          <Text
-                            variant='paragraph1'
-                            textColor='error'
-                            ml={price.Def_Price_Yn === 'N' ? '8' : undefined}
-                          >
-                            품절
+                    <VStack key={subPrice.Shop_Food_Price_Seq}>
+                      <HStack py='8'>
+                        <HStack css={{ flex: 1 }}>
+                          <Text variant='paragraph1' wordBreak='keepAll'>
+                            {subPrice.Food_Price_Nm}
                           </Text>
-                        )}
+                          {subPrice.Sold_Out && (
+                            <Text
+                              variant='paragraph1'
+                              textColor='error'
+                              ml={price.Def_Price_Yn === 'N' ? '8' : undefined}
+                            >
+                              품절
+                            </Text>
+                          )}
+                        </HStack>
+                        <Text variant='paragraph1' wordBreak='keepAll'>
+                          {`+ ${subPrice.Food_Price} 원`}
+                        </Text>
                       </HStack>
-                      <Text variant='paragraph1' wordBreak='keepAll'>
-                        {price.Def_Price_Yn === 'N' && '+ '}
-                        {subPrice.Food_Price}
-                      </Text>
-                    </HStack>
+                      <HDivider />
+                    </VStack>
                   ))}
                 </VStack>
-              </HStack>
-              {index !== menu.List_Shop_Food_Price_Grp.length - 1 && (
-                <HDivider />
-              )}
-            </>
-          ))}
-        </VStack>
-        <VStack css={{ flex: 1 }}>
-          <Image src={menu.Img_Url} css={{ borderRadius: '$small' }} />
-        </VStack>
-      </HStack>
+              </VStack>
+            )}
+          </Box>
+        ))}
+      </VStack>
     </VStack>
   );
 }

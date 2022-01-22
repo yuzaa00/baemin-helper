@@ -4,12 +4,16 @@ import { SingleMenuData } from '~/getMenu';
 
 export interface MenuProps {
   menu: SingleMenuData;
+  isRecommended?: boolean;
 }
 
-export default function Menu({ menu }: MenuProps) {
-  console.log(menu);
+export default function Menu({ menu, isRecommended }: MenuProps) {
+  const params = new URLSearchParams();
+  params.set('option', menu.Shop_Food_Seq);
+  isRecommended && params.set('isRecommended', 'true');
+
   return (
-    <Link to={menu.Shop_Food_Seq}>
+    <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>
       <VStack
         p='16'
         css={{
@@ -23,6 +27,7 @@ export default function Menu({ menu }: MenuProps) {
               <Text variant='heading5' wordBreak='keepAll'>
                 {menu.Food_Nm}
               </Text>
+              {/** TODO : 품절인 경우 클릭 불가 */}
               {menu.Sold_Out && (
                 <Text variant='heading5' ml='4' textColor='error'>
                   품절
