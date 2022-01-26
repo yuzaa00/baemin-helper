@@ -12,6 +12,8 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
   params.set('option', menu.Shop_Food_Seq);
   isRecommended && params.set('isRecommended', 'true');
 
+  const priceFormatter = new Intl.NumberFormat();
+  console.log(menu);
   return (
     <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>
       <VStack
@@ -24,7 +26,9 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
         <HStack gap='12'>
           <VStack gap='4' css={{ flex: 1.5 }} justifyContent='center'>
             <HStack>
-              <Text variant='heading5' wordBreak='keepAll'>
+              {/** 메뉴명 */}
+
+              <Text variant='heading5' wordBreak='keepAll' textColor='gray7'>
                 {menu.Food_Nm}
               </Text>
               {/** TODO : 품절인 경우 클릭 불가 */}
@@ -34,14 +38,46 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
                 </Text>
               )}
             </HStack>
-
-            <Text variant='paragraph1' wordBreak='keepAll'>
-              {
-                menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
-                  .Food_Price
-              }{' '}
-              원
+            <Text variant='paragraph2' wordBreak='keepAll' textColor='gray4'>
+              {menu.Food_Cont}
             </Text>
+            {/** 가격 정보 */}
+            <HStack>
+              {menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
+                .Food_Price_Nm &&
+                !isRecommended && (
+                  <Text variant='paragraph1' wordBreak='keepAll'>
+                    {
+                      menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
+                        .Food_Price_Nm
+                    }
+                    &nbsp; : &nbsp;
+                  </Text>
+                )}
+              <Text variant='paragraph1' wordBreak='keepAll'>
+                {`${priceFormatter.format(
+                  Number(
+                    menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
+                      .Food_Price
+                  )
+                )}원`}
+              </Text>
+            </HStack>
+            {menu.representative && (
+              <Text
+                variant='small'
+                css={{
+                  background: '#F0EEE9',
+                  color: '#A9805B',
+                  width: 'fit-content',
+                  padding: '2px 5px',
+                  borderRadius: '$xsmall',
+                }}
+                textAlign='center'
+              >
+                대표
+              </Text>
+            )}
           </VStack>
           <VStack css={{ flex: 1 }}>
             <Image src={menu.Img_Url} css={{ borderRadius: '$small' }} />
