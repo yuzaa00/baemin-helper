@@ -1,4 +1,5 @@
 import { HStack, VStack, Text, Image } from '@dano-inc/design-system';
+import { LineIconArrowRight } from '@dano-inc/react-icons';
 import { Link } from 'remix';
 import { SingleMenuData } from '~/getMenu';
 
@@ -21,13 +22,13 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
         css={{
           width: '100%',
           borderBottom: '1px solid $gray2',
+          cursor: 'pointer',
         }}
       >
-        <HStack gap='12'>
+        <HStack gap='12' alignItems='center'>
           <VStack gap='4' css={{ flex: 1.5 }} justifyContent='center'>
+            {/** 메뉴명 */}
             <HStack>
-              {/** 메뉴명 */}
-
               <Text variant='heading5' wordBreak='keepAll' textColor='gray7'>
                 {menu.Food_Nm}
               </Text>
@@ -38,9 +39,24 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
                 </Text>
               )}
             </HStack>
-            <Text variant='paragraph2' wordBreak='keepAll' textColor='gray4'>
-              {menu.Food_Cont}
-            </Text>
+            {/** 메뉴 설명 */}
+            {menu.Food_Cont && (
+              <Text
+                variant='paragraph2'
+                wordBreak='keepAll'
+                textColor='gray4'
+                css={{
+                  height: '45px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  '-webkit-line-clamp': 2,
+                  '-webkit-box-orient': 'vertical',
+                }}
+              >
+                {menu.Food_Cont}
+              </Text>
+            )}
             {/** 가격 정보 */}
             <HStack>
               {menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
@@ -79,8 +95,11 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
               </Text>
             )}
           </VStack>
-          <VStack css={{ flex: 1 }}>
+          <VStack css={{ flex: 0.8 }}>
             <Image src={menu.Img_Url} css={{ borderRadius: '$small' }} />
+          </VStack>
+          <VStack css={{ flex: 0.1 }}>
+            <LineIconArrowRight />
           </VStack>
         </HStack>
       </VStack>
