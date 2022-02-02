@@ -1,6 +1,7 @@
 import { HStack, VStack, Text, Image } from '@dano-inc/design-system';
 import { LineIconArrowRight } from '@dano-inc/react-icons';
 import { Link } from 'remix';
+import { formatPrice } from '~/features/common/internals/formatPrice';
 import { SingleMenuData } from '~/getMenu';
 
 export interface MenuProps {
@@ -14,7 +15,7 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
   isRecommended && params.set('isRecommended', 'true');
 
   const priceFormatter = new Intl.NumberFormat();
-  console.log(menu);
+
   return (
     <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>
       <VStack
@@ -71,10 +72,11 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
                   </Text>
                 )}
               <Text variant='paragraph1' wordBreak='keepAll'>
-                {`${priceFormatter.format(
-                  Number(
+                {`${formatPrice(
+                  parseInt(
                     menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
-                      .Food_Price
+                      .Food_Price,
+                    10
                   )
                 )}원`}
               </Text>

@@ -10,6 +10,7 @@ import { LineIconArrowLeft } from '@dano-inc/react-icons';
 import { SingleMenuData } from '~/getMenu';
 import { useNavigate } from 'remix';
 import ShareButton from '~/features/common/components/ShareButton';
+import { formatPrice } from '~/features/common/internals/formatPrice';
 
 export interface MenuOptionProps {
   option: SingleMenuData;
@@ -71,7 +72,9 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
                     wordBreak='keepAll'
                     textColor='gray7'
                   >
-                    {`${price.List_Shop_Food_Price[0].Food_Price} 원`}
+                    {`${formatPrice(
+                      parseInt(price.List_Shop_Food_Price[0].Food_Price, 10)
+                    )} 원`}
                   </Text>
                 </HStack>
                 <HDivider />
@@ -121,11 +124,13 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
                           )}
                         </HStack>
                         <Text
-                          variant='paragraph1'
+                          variant='paragraph2'
                           wordBreak='keepAll'
                           textColor='gray6'
                         >
-                          {`+ ${subPrice.Food_Price} 원`}
+                          {`+ ${formatPrice(
+                            parseInt(subPrice.Food_Price, 10)
+                          )} 원`}
                         </Text>
                       </HStack>
                       <HDivider />
