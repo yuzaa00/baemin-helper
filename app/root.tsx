@@ -8,6 +8,7 @@ import {
 } from 'remix';
 import type { MetaFunction } from 'remix';
 import { globalCss } from '@dano-inc/stitches-react';
+import { ToastContainer } from '@dano-inc/design-system';
 
 export const meta: MetaFunction = () => {
   return { title: 'Baemin Helper' };
@@ -55,6 +56,7 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
+        <ToastContainer />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
