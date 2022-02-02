@@ -28,7 +28,7 @@ export default function detail() {
         gap='16'
         css={{
           width: '100%',
-          maxWidth: '375px',
+          maxWidth: '640px',
         }}
       >
         <MenuOption option={data} url={url} />

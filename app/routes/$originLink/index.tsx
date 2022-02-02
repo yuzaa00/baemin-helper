@@ -1,19 +1,9 @@
 import { LoaderFunction, useLoaderData } from 'remix';
 import { getMenu, MenuData } from '~/getMenu';
-import {
-  VStack,
-  Text,
-  HStack,
-  Tabs,
-  Image,
-  IconButton,
-  Button,
-} from '@dano-inc/design-system';
+import { VStack, Text, HStack, Tabs, Button } from '@dano-inc/design-system';
 import { styled } from '@dano-inc/stitches-react';
 import Menu from '~/features/menu/components/Menu';
-import { LineIconShare } from '@dano-inc/react-icons';
 import ShareButton from '~/features/common/components/ShareButton';
-import { getShopId } from '~/getShopId';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = request.url;

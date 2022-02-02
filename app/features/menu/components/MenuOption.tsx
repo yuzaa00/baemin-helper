@@ -36,9 +36,14 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
         <VStack alignItems='center'>
           <Text
             variant='heading3'
-            css={{ maxWidth: '200px' }}
+            css={{
+              '@small': {
+                maxWidth: '200px',
+              },
+            }}
             textAlign='center'
             wordBreak='keepAll'
+            textColor='gray7'
           >
             {option.Food_Nm}
           </Text>
@@ -54,10 +59,18 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
             {price.Def_Price_Yn === 'Y' ? (
               <VStack>
                 <HStack py='8' justifyContent='spaceBetween'>
-                  <Text variant='heading6' wordBreak='keepAll'>
+                  <Text
+                    variant='heading6'
+                    wordBreak='keepAll'
+                    textColor='gray7'
+                  >
                     {price.Shop_Food_Price_Grp_Nm}
                   </Text>
-                  <Text variant='paragraph1' wordBreak='keepAll'>
+                  <Text
+                    variant='paragraph1'
+                    wordBreak='keepAll'
+                    textColor='gray7'
+                  >
                     {`${price.List_Shop_Food_Price[0].Food_Price} 원`}
                   </Text>
                 </HStack>
@@ -66,7 +79,12 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
             ) : (
               <VStack gap='10'>
                 <HStack pt='10' alignItems='center'>
-                  <Text variant='heading6' wordBreak='keepAll' mr='6'>
+                  <Text
+                    variant='heading6'
+                    wordBreak='keepAll'
+                    mr='6'
+                    textColor='gray7'
+                  >
                     {price.Shop_Food_Price_Grp_Nm}
                   </Text>
                   {Number(price.Min_Sel) > 0 && (
@@ -84,13 +102,17 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
                   {price.List_Shop_Food_Price.map(subPrice => (
                     <VStack key={subPrice.Shop_Food_Price_Seq}>
                       <HStack py='8'>
-                        <HStack css={{ flex: 1 }}>
-                          <Text variant='paragraph1' wordBreak='keepAll'>
+                        <HStack css={{ flex: 1 }} alignItems='center'>
+                          <Text
+                            variant='paragraph2'
+                            wordBreak='keepAll'
+                            textColor='gray6'
+                          >
                             {subPrice.Food_Price_Nm}
                           </Text>
                           {subPrice.Sold_Out && (
                             <Text
-                              variant='paragraph1'
+                              variant='paragraph4'
                               textColor='error'
                               ml={price.Def_Price_Yn === 'N' ? '8' : undefined}
                             >
@@ -98,7 +120,11 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
                             </Text>
                           )}
                         </HStack>
-                        <Text variant='paragraph1' wordBreak='keepAll'>
+                        <Text
+                          variant='paragraph1'
+                          wordBreak='keepAll'
+                          textColor='gray6'
+                        >
                           {`+ ${subPrice.Food_Price} 원`}
                         </Text>
                       </HStack>
