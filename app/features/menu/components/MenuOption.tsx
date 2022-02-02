@@ -6,10 +6,9 @@ import {
   IconButton,
   Box,
 } from '@dano-inc/design-system';
-import { LineIconArrowLeft, LineIconShare } from '@dano-inc/react-icons';
+import { LineIconArrowLeft } from '@dano-inc/react-icons';
 import { SingleMenuData } from '~/getMenu';
 import { useNavigate } from 'remix';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import ShareButton from '~/features/common/components/ShareButton';
 
 export interface MenuOptionProps {
