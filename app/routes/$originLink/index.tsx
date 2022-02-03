@@ -1,9 +1,11 @@
-import { LoaderFunction, useLoaderData } from 'remix';
+import type { LoaderFunction, MetaFunction } from 'remix';
+import { useLoaderData } from 'remix';
 import { getMenu, MenuData } from '~/getMenu';
 import { VStack, Text, HStack, Tabs, Button } from '@dano-inc/design-system';
 import { styled } from '@dano-inc/stitches-react';
 import Menu from '~/features/menu/components/Menu';
 import ShareButton from '~/features/common/components/ShareButton';
+import AppButton from '~/features/common/components/AppButton';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = request.url;
@@ -11,6 +13,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   if (response.status !== 'SUCCESS') throw Error;
   return { data: response.data, url, originLink: params.originLink };
+};
+
+export const meta: MetaFunction = ({ data }: { data: { data: MenuData } }) => {
+  return {
+    title: `${data.data.shop_info.Shop_Nm}`,
+    description: '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
+  };
 };
 
 export default function Index() {
@@ -23,13 +32,14 @@ export default function Index() {
   };
 
   return (
-    <HStack justifyContent='center' css={{ margin: '$24 $10 $48' }}>
+    <HStack justifyContent='center' css={{ margin: '$24 $10 94px' }}>
       <VStack
         alignItems='center'
         gap='16'
         css={{
           width: '100%',
           maxWidth: '640px',
+          padding: '',
         }}
       >
         <HStack pos='relative' css={{ width: '100%' }}>
@@ -84,23 +94,7 @@ export default function Index() {
             ))}
           </Tabs.Root>
         </HStack>
-        <HStack>
-          <Button
-            color='gray'
-            fullWidth
-            pos='fixed'
-            css={{
-              bottom: 0,
-              borderRadius: '$sharp',
-              maxWidth: '375px',
-              left: '50%',
-              transform: 'translate(-50%, 0)',
-            }}
-            onClick={handleClick}
-          >
-            앱으로 보기
-          </Button>
-        </HStack>
+        <AppButton originLink={originLink} />
       </VStack>
     </HStack>
   );

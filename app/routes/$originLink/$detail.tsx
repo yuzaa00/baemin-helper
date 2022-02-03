@@ -1,7 +1,7 @@
 import { useLoaderData } from 'remix';
-import type { LoaderFunction } from 'remix';
-import { getMenu, getMenuOption, MenuData } from '~/getMenu';
-import { HStack, VStack, Text } from '@dano-inc/design-system';
+import type { LoaderFunction, MetaFunction } from 'remix';
+import { getMenuOption, SingleMenuData } from '~/getMenu';
+import { HStack, VStack } from '@dano-inc/design-system';
 import MenuOption from '~/features/menu/components/MenuOption';
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -16,6 +16,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.originLink!
   );
   return { data, url };
+};
+
+export const meta: MetaFunction = ({
+  data,
+}: {
+  data: { data: SingleMenuData };
+}) => {
+  return {
+    title: `${data.data.Food_Nm}`,
+    description: '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
+  };
 };
 
 export default function detail() {

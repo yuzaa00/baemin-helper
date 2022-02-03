@@ -8,7 +8,7 @@ export default function Index() {
         gap='16'
         css={{
           width: '100%',
-          maxWidth: '375px',
+          maxWidth: '640px',
         }}
       >
         <Text variant='heading2'>여기까진 생각을 못했네요</Text>
