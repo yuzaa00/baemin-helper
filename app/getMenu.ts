@@ -8,6 +8,7 @@ export interface SingleMenuData {
   Images: [];
   Img_Url: string;
   Sold_Out: boolean;
+  representative: boolean;
   List_Shop_Food_Price_Grp: {
     Def_Price_Yn: 'Y' | 'N'; // 기본 금액 여부
     Max_Sel: string; // 최대 구매 수량

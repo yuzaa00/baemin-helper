@@ -1,18 +1,9 @@
 import { LoaderFunction, useLoaderData } from 'remix';
 import { getMenu, MenuData } from '~/getMenu';
-import {
-  VStack,
-  Text,
-  HStack,
-  Tabs,
-  Image,
-  IconButton,
-  Button,
-} from '@dano-inc/design-system';
+import { VStack, Text, HStack, Tabs, Button } from '@dano-inc/design-system';
+import { styled } from '@dano-inc/stitches-react';
 import Menu from '~/features/menu/components/Menu';
-import { LineIconShare } from '@dano-inc/react-icons';
 import ShareButton from '~/features/common/components/ShareButton';
-import { getShopId } from '~/getShopId';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = request.url;
@@ -38,14 +29,19 @@ export default function Index() {
         gap='16'
         css={{
           width: '100%',
-          maxWidth: '375px',
+          maxWidth: '640px',
         }}
       >
         <HStack pos='relative' css={{ width: '100%' }}>
+          {/** 가게 이름 */}
           <VStack alignItems='center'>
             <Text
               variant='heading3'
-              css={{ maxWidth: '200px' }}
+              css={{
+                '@small': {
+                  maxWidth: '200px',
+                },
+              }}
               textAlign='center'
               wordBreak='keepAll'
             >
@@ -56,7 +52,7 @@ export default function Index() {
         </HStack>
         <HStack css={{ width: '100%' }}>
           <Tabs.Root defaultValue='대표 메뉴' css={{ width: '100%' }}>
-            <Tabs.List variant='default'>
+            <StyledTabsList variant='default'>
               {/** 대표 메뉴 (고정) */}
               <Tabs.Trigger value='대표 메뉴'>대표 메뉴</Tabs.Trigger>
               {/** 그 외 메뉴 */}
@@ -68,7 +64,7 @@ export default function Index() {
                   {menu.Shop_Food_Grp_Nm}
                 </Tabs.Trigger>
               ))}
-            </Tabs.List>
+            </StyledTabsList>
             {/** 대표 메뉴 (고정) */}
             <Tabs.Content value='대표 메뉴' css={{ width: '100%' }}>
               {shop_menu.menu_ord.rec.map(menu => (
@@ -109,3 +105,21 @@ export default function Index() {
     </HStack>
   );
 }
+
+const StyledTabsList = styled(Tabs.List, {
+  padding: '0 10px 10px',
+  boxShadow: 'none',
+  '> button': {
+    border: '1px solid $gray3',
+    borderRadius: '$circle',
+    height: '40px',
+    padding: '0 $12',
+    marginRight: '$8 !important',
+    '&[data-state="active"]': {
+      boxShadow: 'none',
+      color: '$white',
+      backgroundColor: '#444444',
+      border: 'none',
+    },
+  },
+});
