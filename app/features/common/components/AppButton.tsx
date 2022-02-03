@@ -19,6 +19,7 @@ export default function AppButton({ originLink }: AppButtonProps) {
     >
       <StyledImg src='/images/baemin.png' onClick={handleClick} />
       <Button
+        color='gray'
         size='large'
         css={{
           width: 'fit-content',
