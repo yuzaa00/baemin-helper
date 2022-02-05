@@ -1,6 +1,6 @@
-import { ToastContainer } from '@dano-inc/design-system';
+import { HStack, Text, ToastContainer, VStack } from '@dano-inc/design-system';
 import { globalCss } from '@dano-inc/stitches-react';
-import { useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import {
   Links,
   LinksFunction,
@@ -81,13 +81,10 @@ const resetStyle = globalCss({
   },
 });
 
-export default function App() {
-  resetStyle();
-
-  useLayoutEffect(() => {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-  });
-
+function Document({
+  children,
+  title,
+}: { children: React.ReactNode; title?: string }) {
   return (
     <html lang="ko">
       <head>
@@ -99,12 +96,12 @@ export default function App() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer', 'G-6KWFTN3DEJ');
-  `,
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer', 'G-6KWFTN3DEJ');
+`,
           }}
         />
         <script
@@ -116,12 +113,47 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <ToastContainer />
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
+        {children}
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
+  );
+}
+
+export default function App() {
+  resetStyle();
+
+  useLayoutEffect(() => {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+  });
+
+  return (
+    <Document>
+      <ToastContainer />
+      <Outlet />
+      <ScrollRestoration />
+      <Scripts />
+    </Document>
+  );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <Document title="Uh-oh!">
+      <HStack justifyContent="center" css={{ margin: '$24 $10 $48' }}>
+        <VStack
+          alignItems="center"
+          gap="16"
+          css={{
+            width: '100%',
+            maxWidth: '640px',
+          }}
+        >
+          <Text variant="heading2" wordBreak="keepAll">
+            앗🙀 잠시 후에 다시 들어와주시겠어요?
+          </Text>
+        </VStack>
+      </HStack>
+    </Document>
   );
 }
