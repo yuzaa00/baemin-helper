@@ -1,7 +1,7 @@
 import type { LoaderFunction, MetaFunction } from 'remix';
 import { useLoaderData } from 'remix';
 import { getMenu, MenuData } from '~/getMenu';
-import { VStack, Text, HStack, Tabs, Button } from '@dano-inc/design-system';
+import { VStack, Text, HStack, Tabs } from '@dano-inc/design-system';
 import { styled } from '@dano-inc/stitches-react';
 import Menu from '~/features/menu/components/Menu';
 import ShareButton from '~/features/common/components/ShareButton';
@@ -26,10 +26,6 @@ export default function Index() {
   const { data, url, originLink } =
     useLoaderData<{ data: MenuData; url: string; originLink: string }>();
   const { shop_info, shop_menu } = data;
-
-  const handleClick = () => {
-    window.open(`https://baemin.me/${originLink}`);
-  };
 
   return (
     <HStack justifyContent='center' css={{ margin: '$24 $10 94px' }}>
