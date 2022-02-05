@@ -19,7 +19,7 @@ export default function AppButton({ originLink }: AppButtonProps) {
         width: '100%',
         bottom: 0,
         maxWidth: '640px',
-        background: 'linear-gradient(transparent, $white)',
+        background: 'linear-gradient(rgba(255, 255, 255, 0), $white)',
       }}
     >
       <StyledImg src="/images/baemin.png" onClick={handleClick} />
