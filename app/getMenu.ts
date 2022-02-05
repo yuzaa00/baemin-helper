@@ -4,6 +4,7 @@ export interface SingleMenuData {
   Shop_Food_Seq: string;
   Shop_Food_Grp_Seq: string;
   Food_Nm: string; // 음식명
+  Shop_Nm: string; // 음식점명
   Food_Cont: string; // 설명
   Images: [];
   Img_Url: string;
@@ -84,12 +85,12 @@ export const getMenuOption = async (
   const response = await getMenu(originLink);
 
   if (isRecommended) {
-    return response.data.shop_menu.menu_ord.rec.find(
+    return {...response.data.shop_menu.menu_ord.rec.find(
       menu => menu.Shop_Food_Seq === option
-    );
+    ), Shop_Nm: response.data.shop_info.Shop_Nm};
   }
 
-  return response.data.shop_menu.menu_ord.normal
+  return {... response.data.shop_menu.menu_ord.normal
     .find(option => option.Shop_Food_Grp_Seq === params)
-    ?.List_Shop_Food.find(menu => menu.Shop_Food_Seq === option);
+    ?.List_Shop_Food.find(menu => menu.Shop_Food_Seq === option), Shop_Nm: response.data.shop_info.Shop_Nm}
 };
