@@ -11,16 +11,21 @@ export default function AppButton({ originLink }: AppButtonProps) {
   };
   return (
     <HStack
-      justifyContent='spaceBetween'
-      alignItems='center'
-      pos='fixed'
-      p='16'
-      css={{ width: '100%', bottom: 0, maxWidth: '640px' }}
+      justifyContent="spaceBetween"
+      alignItems="center"
+      pos="fixed"
+      p="16"
+      css={{
+        width: '100%',
+        bottom: 0,
+        maxWidth: '640px',
+        background: 'linear-gradient(transparent, $white)',
+      }}
     >
-      <StyledImg src='/images/baemin.png' onClick={handleClick} />
+      <StyledImg src="/images/baemin.png" onClick={handleClick} />
       <Button
-        color='gray'
-        size='large'
+        color="gray"
+        size="large"
         css={{
           width: 'fit-content',
           height: 'fit-content',
