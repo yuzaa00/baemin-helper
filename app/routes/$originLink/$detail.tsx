@@ -23,9 +23,12 @@ export const meta: MetaFunction = ({
 }: {
   data: { data: SingleMenuData };
 }) => {
+  
   return {
-    title: `${data.data.Food_Nm}`,
+    title: `${data.data.Shop_Nm} - ${data.data.Food_Nm}`,
     description: '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
+    'og:title': `${data.data.Food_Nm}`,
+    'og:description': '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
   };
 };
 
