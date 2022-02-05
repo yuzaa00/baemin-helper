@@ -1,11 +1,11 @@
+import { HStack, Tabs, Text, VStack } from '@dano-inc/design-system';
+import { styled } from '@dano-inc/stitches-react';
 import type { LoaderFunction, MetaFunction } from 'remix';
 import { useLoaderData } from 'remix';
-import { getMenu, MenuData } from '~/getMenu';
-import { VStack, Text, HStack, Tabs } from '@dano-inc/design-system';
-import { styled } from '@dano-inc/stitches-react';
-import Menu from '~/features/menu/components/Menu';
-import ShareButton from '~/features/common/components/ShareButton';
 import AppButton from '~/features/common/components/AppButton';
+import ShareButton from '~/features/common/components/ShareButton';
+import Menu from '~/features/menu/components/Menu';
+import { getMenu, MenuData } from '~/getMenu';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = request.url;
@@ -17,39 +17,40 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const meta: MetaFunction = ({ data }: { data: { data: MenuData } }) => {
   return {
-    'og:title':  `${data.data.shop_info.Shop_Nm}`,
+    'og:title': `${data.data.shop_info.Shop_Nm}`,
     'og:description': '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
   };
 };
 
 export default function Index() {
-  const { data, url, originLink } =
-    useLoaderData<{ data: MenuData; url: string; originLink: string }>();
+  const { data, url, originLink } = useLoaderData<
+    { data: MenuData; url: string; originLink: string }
+  >();
   const { shop_info, shop_menu } = data;
 
   return (
-    <HStack justifyContent='center' css={{ margin: '$24 $10 94px' }}>
+    <HStack justifyContent="center" css={{ margin: '$24 $10 94px' }}>
       <VStack
-        alignItems='center'
-        gap='16'
+        alignItems="center"
+        gap="16"
         css={{
           width: '100%',
           maxWidth: '640px',
           padding: '',
         }}
       >
-        <HStack pos='relative' css={{ width: '100%' }}>
+        <HStack pos="relative" css={{ width: '100%' }}>
           {/** 가게 이름 */}
-          <VStack alignItems='center'>
+          <VStack alignItems="center">
             <Text
-              variant='heading3'
+              variant="heading3"
               css={{
                 '@small': {
                   maxWidth: '200px',
                 },
               }}
-              textAlign='center'
-              wordBreak='keepAll'
+              textAlign="center"
+              wordBreak="keepAll"
             >
               {shop_info.Shop_Nm}
             </Text>
@@ -57,10 +58,10 @@ export default function Index() {
           <ShareButton url={url} />
         </HStack>
         <HStack css={{ width: '100%' }}>
-          <Tabs.Root defaultValue='대표 메뉴' css={{ width: '100%' }}>
-            <StyledTabsList variant='default'>
+          <Tabs.Root defaultValue="대표 메뉴" css={{ width: '100%' }}>
+            <StyledTabsList variant="default">
               {/** 대표 메뉴 (고정) */}
-              <Tabs.Trigger value='대표 메뉴'>대표 메뉴</Tabs.Trigger>
+              <Tabs.Trigger value="대표 메뉴">대표 메뉴</Tabs.Trigger>
               {/** 그 외 메뉴 */}
               {shop_menu.menu_ord.normal.map((menu, index) => (
                 <Tabs.Trigger
@@ -72,7 +73,7 @@ export default function Index() {
               ))}
             </StyledTabsList>
             {/** 대표 메뉴 (고정) */}
-            <Tabs.Content value='대표 메뉴' css={{ width: '100%' }}>
+            <Tabs.Content value="대표 메뉴" css={{ width: '100%' }}>
               {shop_menu.menu_ord.rec.map(menu => (
                 <Menu menu={menu} key={menu.Shop_Food_Seq} isRecommended />
               ))}
