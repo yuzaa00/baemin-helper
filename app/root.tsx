@@ -1,3 +1,5 @@
+import { ToastContainer } from '@dano-inc/design-system';
+import { globalCss } from '@dano-inc/stitches-react';
 import {
   Links,
   LinksFunction,
@@ -8,8 +10,6 @@ import {
   ScrollRestoration,
 } from 'remix';
 import type { MetaFunction } from 'remix';
-import { globalCss } from '@dano-inc/stitches-react';
-import { ToastContainer } from '@dano-inc/design-system';
 
 export const links: LinksFunction = () => {
   return [
@@ -51,7 +51,7 @@ export const meta: MetaFunction = () => {
     'og:image': '/images/baemin-helper.png',
     'og:image:width': '1200',
     'og:image:height': '630',
-    'og:image:alt': '배민 헬퍼'
+    'og:image:alt': '배민 헬퍼',
   };
 };
 
@@ -74,7 +74,8 @@ const resetStyle = globalCss({
   },
 
   '*': {
-    fontFamily: `'Noto Sans KR', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif`,
+    fontFamily:
+      `'Noto Sans KR', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif`,
     letterSpacing: '-0.01em',
   },
 });
@@ -83,21 +84,26 @@ export default function App() {
   resetStyle();
 
   return (
-    <html lang='ko'>
+    <html lang="ko">
       <head>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2107785439138018"
+          crossOrigin="anonymous"
         />
         <Meta />
         <Links />
       </head>
       <body>
+        <ToastContainer />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <ToastContainer />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
