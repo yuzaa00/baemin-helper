@@ -17,7 +17,7 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
   return (
     <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>
       <VStack
-        p="16"
+        p="10"
         css={{
           width: '100%',
           borderBottom: '1px solid $gray2',
