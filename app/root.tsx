@@ -9,6 +9,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from 'remix';
 import type { MetaFunction } from 'remix';
 
@@ -137,23 +138,39 @@ export default function App() {
   );
 }
 
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  return (
+    <Document title="Uh-oh!">
+      {caught.status === 404
+        && (
+          <>
+            <h2 style={{ textAlign: 'center' }}>
+              앗😓
+            </h2>
+            <h4
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              여긴 아무것도 없어요
+            </h4>
+          </>
+        )}
+    </Document>
+  );
+}
+
 export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document title="Uh-oh!">
-      <HStack justifyContent="center" css={{ margin: '$24 $10 $48' }}>
-        <VStack
-          alignItems="center"
-          gap="16"
-          css={{
-            width: '100%',
-            maxWidth: '640px',
-          }}
-        >
-          <Text variant="heading2" wordBreak="keepAll">
-            앗🙀 잠시 후에 다시 들어와주시겠어요?
-          </Text>
-        </VStack>
-      </HStack>
+      <h2 style={{ textAlign: 'center' }}>
+        앗🙀
+      </h2>
+      <h4 style={{ textAlign: 'center' }}>
+        잠시 후에 다시 들어와주시겠어요?
+      </h4>
     </Document>
   );
 }
