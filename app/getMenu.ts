@@ -9,7 +9,8 @@ export interface SingleMenuData {
   Images: [];
   Img_Url: string;
   Sold_Out: boolean;
-  representative: boolean;
+  representative: boolean; // 대표  태그 여부
+  Solo: boolean; // 1인분 태그 여부
   List_Shop_Food_Price_Grp: {
     Def_Price_Yn: 'Y' | 'N'; // 기본 금액 여부
     Max_Sel: string; // 최대 구매 수량
@@ -38,7 +39,7 @@ export interface MenuData {
       latitude: number;
       longitude: number;
     };
-    distanceTextPhrase: string; //배달주소로부터 약 944m
+    distanceTextPhrase: string; // 배달주소로부터 약 944m
   };
   shop_menu: {
     menu_info: unknown; // 최소 주문 금액, 원산지, 각종 공지글
@@ -68,7 +69,7 @@ export const getMenu = async (params: string): Promise<Menu> => {
   const shopId = await getShopId(params);
 
   const response = await fetch(
-    `https://shopdp-api.baemin.com/v8/shop/${shopId}/detail?adid=00000000-0000-0000-0000-000000000000&appver=11.13.1&campaignId=-1&carrier=45008&defaultreview=N&deviceModel=iPhone14%2C2&displayGroup=DEFAULT&dvc_uniq_id=6F456646-3497-4DF2-9663-1CBFA9215597&dvcid=OPUD70CB790C-F9A0-409F-98EF-2D5E5C064508&filter=&lat=37.54241331543683&lat4Distance=37.54241331543683&lng=126.9403147496142&lng4Distance=126.9403147496142&mem=151202002322`
+    `https://shopdp-api.baemin.com/v8/shop/${shopId}/detail?adid=00000000-0000-0000-0000-000000000000&appver=11.13.1&campaignId=-1&carrier=45008&defaultreview=N&deviceModel=iPhone14%2C2&displayGroup=DEFAULT&dvc_uniq_id=6F456646-3497-4DF2-9663-1CBFA9215597&dvcid=OPUD70CB790C-F9A0-409F-98EF-2D5E5C064508&filter=&lat=37.54241331543683&lat4Distance=37.54241331543683&lng=126.9403147496142&lng4Distance=126.9403147496142&mem=151202002322`,
   );
 
   return response.json();
@@ -78,19 +79,25 @@ export const getMenuOption = async (
   params: string | undefined,
   option: string,
   isRecommended: string | null,
-  originLink: string
+  originLink: string,
 ) => {
   if (!params || !option) return;
 
   const response = await getMenu(originLink);
 
   if (isRecommended) {
-    return {...response.data.shop_menu.menu_ord.rec.find(
-      menu => menu.Shop_Food_Seq === option
-    ), Shop_Nm: response.data.shop_info.Shop_Nm};
+    return {
+      ...response.data.shop_menu.menu_ord.rec.find(
+        menu => menu.Shop_Food_Seq === option,
+      ),
+      Shop_Nm: response.data.shop_info.Shop_Nm,
+    };
   }
 
-  return {... response.data.shop_menu.menu_ord.normal
-    .find(option => option.Shop_Food_Grp_Seq === params)
-    ?.List_Shop_Food.find(menu => menu.Shop_Food_Seq === option), Shop_Nm: response.data.shop_info.Shop_Nm}
+  return {
+    ...response.data.shop_menu.menu_ord.normal
+      .find(option => option.Shop_Food_Grp_Seq === params)
+      ?.List_Shop_Food.find(menu => menu.Shop_Food_Seq === option),
+    Shop_Nm: response.data.shop_info.Shop_Nm,
+  };
 };

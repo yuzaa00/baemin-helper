@@ -13,6 +13,7 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
   const params = new URLSearchParams();
   params.set('option', menu.Shop_Food_Seq);
   isRecommended && params.set('isRecommended', 'true');
+  console.log(menu);
 
   return (
     <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>
@@ -85,21 +86,39 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
                 }원`}
               </Text>
             </HStack>
-            {menu.representative && (
-              <Text
-                variant="small"
-                css={{
-                  background: '#F0EEE9',
-                  color: '#A9805B',
-                  width: 'fit-content',
-                  padding: '2px 5px',
-                  borderRadius: '$xsmall',
-                }}
-                textAlign="center"
-              >
-                대표
-              </Text>
-            )}
+            {/** 대표, 1인분 태그 정보 */}
+            <HStack gap="4">
+              {menu.Solo && (
+                <Text
+                  variant="small"
+                  css={{
+                    background: '#F0EEE9',
+                    color: '#A9805B',
+                    width: 'fit-content',
+                    padding: '2px 5px',
+                    borderRadius: '$xsmall',
+                  }}
+                  textAlign="center"
+                >
+                  1인분
+                </Text>
+              )}
+              {menu.representative && (
+                <Text
+                  variant="small"
+                  css={{
+                    background: '#F0EEE9',
+                    color: '#A9805B',
+                    width: 'fit-content',
+                    padding: '2px 5px',
+                    borderRadius: '$xsmall',
+                  }}
+                  textAlign="center"
+                >
+                  대표
+                </Text>
+              )}
+            </HStack>
           </VStack>
           <VStack css={{ flex: 0.1 }}>
             <LineIconArrowRight />
