@@ -6,7 +6,26 @@ export interface SingleMenuData {
   Food_Nm: string; // 음식명
   Shop_Nm: string; // 음식점명
   Food_Cont: string; // 설명
-  Images: [];
+  Images: [{
+    order: number;
+    Image_Detail: {
+      rectangle: {
+        height: number;
+        width: number;
+        url: string;
+      };
+      squre: {
+        height: number;
+        width: number;
+        url: string;
+      };
+      thumbnail: {
+        height: number;
+        width: number;
+        url: string;
+      };
+    };
+  }];
   Img_Url: string;
   Sold_Out: boolean;
   representative: boolean; // 대표  태그 여부

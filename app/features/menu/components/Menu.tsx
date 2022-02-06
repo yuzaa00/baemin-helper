@@ -1,5 +1,7 @@
 import { HStack, Image, Text, VStack } from '@dano-inc/design-system';
 import { LineIconArrowRight } from '@dano-inc/react-icons';
+import { LineIconError } from '@dano-inc/react-icons';
+import { styled } from '@dano-inc/stitches-react';
 import { Link } from 'remix';
 import { formatPrice } from '~/features/common/internals/formatPrice';
 import { SingleMenuData } from '~/getMenu';
@@ -28,27 +30,30 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
         <HStack gap="12" alignItems="center">
           {/** 이미지 */}
           {menu.Img_Url && (
-            <VStack css={{ flex: 0.8 }}>
-              <Image src={menu.Img_Url} css={{ borderRadius: '$small' }} />
+            <VStack css={{ flex: 0.8, alignSelf: 'flex-start' }}>
+              <StyledImg
+                src={menu.Img_Url}
+              />
             </VStack>
           )}
           <VStack gap="4" css={{ flex: 1.5 }} justifyContent="center">
             {/** 메뉴명 */}
-            <HStack>
-              <Text variant="heading5" wordBreak="keepAll" textColor="gray7">
-                {menu.Food_Nm}
-              </Text>
-              {/** TODO : 품절인 경우 클릭 불가 */}
-              {menu.Sold_Out && (
-                <Text variant="heading5" ml="4" textColor="error">
-                  품절
+            <Text variant="heading6" wordBreak="keepAll" textColor="gray7">
+              {menu.Food_Nm}
+            </Text>
+            {/** 품절 여부 */}
+            {menu.Sold_Out && (
+              <HStack gap="4" alignItems="center">
+                <LineIconError color="#f04838" fontSize="12" />
+                <Text variant="small" textColor="error">
+                  품절되었어요
                 </Text>
-              )}
-            </HStack>
+              </HStack>
+            )}
             {/** 메뉴 설명 */}
             {menu.Food_Cont && (
               <Text
-                variant="paragraph2"
+                variant="paragraph3"
                 wordBreak="keepAll"
                 textColor="gray4"
                 css={{
@@ -128,3 +133,9 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
     </Link>
   );
 }
+
+const StyledImg = styled('img', {
+  borderRadius: '$small',
+  display: 'flex',
+  width: '100%',
+});
