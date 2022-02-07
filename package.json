@@ -12,10 +12,10 @@
     "start": "npm run dev:wrangler"
   },
   "dependencies": {
-    "@dano-inc/design-system": "^2.0.0-rc.54",
-    "@dano-inc/design-token": "^2.0.0-rc.54",
-    "@dano-inc/react-icons": "^2.0.0-rc.54",
-    "@dano-inc/stitches-react": "^2.0.0-rc.54",
+    "@dano-inc/design-system": "^2.0.0-rc.55",
+    "@dano-inc/design-token": "^2.0.0-rc.55",
+    "@dano-inc/react-icons": "^2.0.0-rc.55",
+    "@dano-inc/stitches-react": "^2.0.0-rc.55",
     "@remix-run/cloudflare-pages": "^1.1.3",
     "@remix-run/react": "^1.1.3",
     "@remix-run/serve": "^1.1.1",
