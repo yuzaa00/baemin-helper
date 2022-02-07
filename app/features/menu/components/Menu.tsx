@@ -15,7 +15,6 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
   const params = new URLSearchParams();
   params.set('option', menu.Shop_Food_Seq);
   isRecommended && params.set('isRecommended', 'true');
-  console.log(menu);
 
   return (
     <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>

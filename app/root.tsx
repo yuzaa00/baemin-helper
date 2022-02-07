@@ -1,6 +1,6 @@
 import { HStack, Text, ToastContainer, VStack } from '@dano-inc/design-system';
 import { globalCss } from '@dano-inc/stitches-react';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import {
   Links,
   LinksFunction,
@@ -10,8 +10,10 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLocation,
 } from 'remix';
 import type { MetaFunction } from 'remix';
+import * as gtag from './lib/gtag';
 
 export const links: LinksFunction = () => {
   return [
@@ -94,15 +96,22 @@ function Document({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer', 'G-6KWFTN3DEJ');
-`,
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
           }}
         />
         <script
@@ -123,10 +132,14 @@ function Document({
 
 export default function App() {
   resetStyle();
+  const location = useLocation();
 
-  useLayoutEffect(() => {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-  });
+  useEffect(() => {
+    const handleRouteChange = (url: any) => {
+      gtag.pageview(url);
+    };
+    handleRouteChange(location.pathname + location.search);
+  }, [location]);
 
   return (
     <Document>
