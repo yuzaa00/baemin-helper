@@ -8,13 +8,13 @@ import { SingleMenuData } from '~/getMenu';
 
 export interface MenuProps {
   menu: SingleMenuData;
-  isRecommended?: boolean;
+  isRec?: boolean;
 }
 
-export default function Menu({ menu, isRecommended }: MenuProps) {
+export default function Menu({ menu, isRec }: MenuProps) {
   const params = new URLSearchParams();
   params.set('option', menu.Shop_Food_Seq);
-  isRecommended && params.set('isRecommended', 'true');
+  isRec && params.set('isRec', 'true');
 
   return (
     <Link to={`${menu.Shop_Food_Grp_Seq}/?${params}`}>
@@ -29,13 +29,19 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
         <HStack gap="12" alignItems="center">
           {/** 이미지 */}
           {menu.Img_Url && (
-            <VStack css={{ flex: 0.8, alignSelf: 'flex-start' }}>
+            <VStack
+              css={{ flex: 0.8, alignSelf: 'flex-start', minWidth: 0 }}
+            >
               <StyledImg
                 src={menu.Img_Url}
               />
             </VStack>
           )}
-          <VStack gap="4" css={{ flex: 1.5 }} justifyContent="center">
+          <VStack
+            gap="4"
+            css={{ flex: 1.5, minWidth: 0 }}
+            justifyContent="center"
+          >
             {/** 메뉴명 */}
             <Text variant="heading6" wordBreak="keepAll" textColor="gray7">
               {menu.Food_Nm}
@@ -56,7 +62,10 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
                 wordBreak="keepAll"
                 textColor="gray4"
                 css={{
-                  height: '45px',
+                  whiteSpace: 'break-spaces',
+                  visibility: 'visible',
+                  wordBreak: 'break-all',
+                  maxHeight: '45px',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   display: '-webkit-box',
@@ -71,7 +80,7 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
             <HStack>
               {menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
                 .Food_Price_Nm
-                && !isRecommended && (
+                && !isRec && (
                 <Text variant="paragraph1" wordBreak="keepAll">
                   {menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
                     .Food_Price_Nm}
@@ -124,7 +133,7 @@ export default function Menu({ menu, isRecommended }: MenuProps) {
               )}
             </HStack>
           </VStack>
-          <VStack css={{ flex: 0.1 }}>
+          <VStack css={{ flex: 0.1, minWidth: 0 }}>
             <LineIconArrowRight />
           </VStack>
         </HStack>

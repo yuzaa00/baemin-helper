@@ -97,14 +97,14 @@ export const getMenu = async (params: string): Promise<Menu> => {
 export const getMenuOption = async (
   params: string | undefined,
   option: string,
-  isRecommended: string | null,
+  isRec: string | null,
   originLink: string,
 ) => {
   if (!params || !option) return;
 
   const response = await getMenu(originLink);
 
-  if (isRecommended) {
+  if (isRec) {
     return {
       ...response.data.shop_menu.menu_ord.rec.find(
         menu => menu.Shop_Food_Seq === option,
