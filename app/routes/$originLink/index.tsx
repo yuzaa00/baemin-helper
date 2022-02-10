@@ -75,7 +75,7 @@ export default function Index() {
             {/** 대표 메뉴 (고정) */}
             <Tabs.Content value="대표 메뉴" css={{ width: '100%' }}>
               {shop_menu.menu_ord.rec.map(menu => (
-                <Menu menu={menu} key={menu.Shop_Food_Seq} isRecommended />
+                <Menu menu={menu} key={menu.Shop_Food_Seq} isRec />
               ))}
             </Tabs.Content>
             {/** 그 외 메뉴 */}

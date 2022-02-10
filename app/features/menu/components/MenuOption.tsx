@@ -7,7 +7,7 @@ import {
   VStack,
 } from '@dano-inc/design-system';
 import { LineIconArrowLeft } from '@dano-inc/react-icons';
-import { useNavigate } from 'remix';
+import { useNavigate, useParams } from 'remix';
 import ShareButton from '~/features/common/components/ShareButton';
 import { formatPrice } from '~/features/common/internals/formatPrice';
 import { SingleMenuData } from '~/getMenu';
@@ -19,9 +19,10 @@ export interface MenuOptionProps {
 
 export default function MenuOption({ option, url }: MenuOptionProps) {
   const navigate = useNavigate();
+  const { originLink } = useParams();
 
   const handleArrowClick = () => {
-    navigate(-1);
+    navigate(`/${originLink}`);
   };
 
   return (
