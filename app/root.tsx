@@ -47,15 +47,15 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => {
   return {
-    title: '배민 헬퍼',
+    title: '배민 메뉴판',
     description: '웹에서 손쉽게 메뉴를 공유해보세요!',
     keywords: '배달의 민족, 배민',
-    'og:title': '배민 헬퍼',
+    'og:title': '배민 메뉴판',
     'og:description': '웹에서 손쉽게 메뉴를 공유해보세요!',
     'og:image': '/images/baemin-helper.png',
     'og:image:width': '1200',
     'og:image:height': '630',
-    'og:image:alt': '배민 헬퍼',
+    'og:image:alt': '배민 메뉴판',
   };
 };
 

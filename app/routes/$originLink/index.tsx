@@ -17,6 +17,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const meta: MetaFunction = ({ data }: { data: { data: MenuData } }) => {
   return {
+    title: `배민 메뉴판 - ${data.data.shop_info.Shop_Nm}`,
     'og:title': `${data.data.shop_info.Shop_Nm}`,
     'og:description': '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
   };
