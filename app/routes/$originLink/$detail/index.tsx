@@ -15,10 +15,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   };
 };
 
-export const meta: MetaFunction = ({ data }: { data: NormalMenus }) => {
+export const meta: MetaFunction = (
+  { data }: { data: { data: NormalMenus } },
+) => {
   return {
-    title: `배민 메뉴판 - ${data.Shop_Nm}`,
-    'og:title': `${data.Shop_Nm}`,
+    title: `배민 메뉴판 - ${data.data.Shop_Nm}`,
+    'og:title': `${data.data.Shop_Nm}`,
     'og:description': '여기를 눌러 웹에서 손쉽게 메뉴를 확인해보세요!',
   };
 };
@@ -29,7 +31,6 @@ export default function detail() {
       data: NormalMenus;
     }
   >();
-
   return (
     <HStack justifyContent="center" css={{ margin: '$24 $10 94px' }}>
       <VStack

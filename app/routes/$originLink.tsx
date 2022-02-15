@@ -41,6 +41,7 @@ export default function Index() {
       originLink: string;
     }
   >();
+
   const { shop_info, shop_menu } = data;
 
   const navigate = useNavigate();
