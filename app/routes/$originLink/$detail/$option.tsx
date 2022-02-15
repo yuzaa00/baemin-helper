@@ -6,12 +6,11 @@ import { getMenuOption, SingleMenuData } from '~/getMenu';
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const url = new URL(request.url);
-  const isRec = url.searchParams.get('isRec');
-  const option = url.searchParams.get('option')!;
+  const isRec = params.detail === 'rec';
 
   const data = await getMenuOption(
     params.detail,
-    option,
+    params.option,
     isRec,
     params.originLink!,
   );
@@ -34,7 +33,7 @@ export default function detail() {
   const { data, url } = useLoaderData();
 
   return (
-    <HStack justifyContent="center" css={{ margin: '$24 $10 $48' }}>
+    <HStack justifyContent="center" css={{ width: '100%' }}>
       <VStack
         alignItems="center"
         gap="16"

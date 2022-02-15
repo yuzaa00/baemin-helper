@@ -19,10 +19,14 @@ export interface MenuOptionProps {
 
 export default function MenuOption({ option, url }: MenuOptionProps) {
   const navigate = useNavigate();
-  const { originLink } = useParams();
+  const { originLink, detail } = useParams();
 
   const handleArrowClick = () => {
-    navigate(`/${originLink}`);
+    if (detail === 'rec') {
+      navigate(`/${originLink}`);
+    } else {
+      navigate(`/${originLink}/${detail}`);
+    }
   };
 
   return (

@@ -1,3 +1,4 @@
+import { MenuProps } from './features/menu/components/Menu';
 import { getShopId } from './getShopId';
 
 export interface SingleMenuData {
@@ -63,13 +64,7 @@ export interface MenuData {
   shop_menu: {
     menu_info: unknown; // 최소 주문 금액, 원산지, 각종 공지글
     menu_ord: {
-      normal: {
-        // 카테고리 (앱 최상단 카테고리)
-        Shop_Food_Grp_Nm: string; // 세트, 대용량, 커피, 음료, 에이드, 주스, 빽스치노&스무디, 베이커리
-        Shop_Food_Grp_Seq: string;
-        Remark: string; // 짧은 설명
-        List_Shop_Food: SingleMenuData[];
-      }[];
+      normal: NormalMenus[];
       rec: SingleMenuData[];
       set: [];
       solo: [];
@@ -77,14 +72,23 @@ export interface MenuData {
   };
 }
 
-export interface Menu {
+export interface NormalMenus {
+  // 카테고리 (앱 최상단 카테고리)
+  Shop_Food_Grp_Nm: string; // 세트, 대용량, 커피, 음료, 에이드, 주스, 빽스치노&스무디, 베이커리
+  Shop_Food_Grp_Seq: string;
+  Remark: string; // 짧은 설명
+  List_Shop_Food: SingleMenuData[];
+  Shop_Nm: string; // 음식점 명
+}
+
+export interface Menus {
   data: MenuData;
   message: string;
   serverDatetime: string;
   status: string;
 }
 
-export const getMenu = async (params: string): Promise<Menu> => {
+export const getMenus = async (params: string): Promise<Menus> => {
   const shopId = await getShopId(params);
 
   const response = await fetch(
@@ -94,15 +98,29 @@ export const getMenu = async (params: string): Promise<Menu> => {
   return response.json();
 };
 
+export const getMenu = async (
+  originLink: string,
+  menuId: string,
+) => {
+  const response = await getMenus(originLink);
+
+  return {
+    ...response.data.shop_menu.menu_ord.normal.find((menus) =>
+      menus.Shop_Food_Grp_Seq === menuId
+    ),
+    Shop_Nm: response.data.shop_info.Shop_Nm,
+  };
+};
+
 export const getMenuOption = async (
   params: string | undefined,
-  option: string,
-  isRec: string | null,
+  option: string | undefined,
+  isRec: boolean,
   originLink: string,
 ) => {
   if (!params || !option) return;
 
-  const response = await getMenu(originLink);
+  const response = await getMenus(originLink);
 
   if (isRec) {
     return {
