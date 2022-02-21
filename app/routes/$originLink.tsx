@@ -122,7 +122,7 @@ export default function Index() {
 const StyledTabsList = styled(Tabs.List, {
   padding: '0 10px 10px',
   boxShadow: 'none',
-  borderBottom: '1px solid #eeeeee',
+  borderBottom: '0.5px solid #eeeeee',
   '> button': {
     border: '1px solid $gray3',
     borderRadius: '$circle',
