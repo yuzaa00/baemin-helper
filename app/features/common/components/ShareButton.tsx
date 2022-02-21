@@ -11,8 +11,9 @@ export default function ShareButton({ url }: ShareButtonProps) {
   const handleCopy = () => {
     toast.show('링크가 복사되었습니다!');
   };
+
   return (
-    <CopyToClipboard text={url} onCopy={handleCopy}>
+    <CopyToClipboard text={`${url}/?utm_source=copy_link`} onCopy={handleCopy}>
       <IconButton pos='absolute' css={{ top: 0, right: 0 }}>
         <LineIconShare />
       </IconButton>
