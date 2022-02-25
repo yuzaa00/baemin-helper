@@ -70,6 +70,9 @@ export default function Index() {
                       '@small': {
                         maxWidth: '200px',
                       },
+                      '@medium': {
+                        maxWidth: '300px',
+                      },
                     }}
                     textAlign="center"
                     wordBreak="keepAll"
@@ -119,6 +122,7 @@ export default function Index() {
 const StyledTabsList = styled(Tabs.List, {
   padding: '0 10px 10px',
   boxShadow: 'none',
+  borderBottom: '0.5px solid #eeeeee',
   '> button': {
     border: '1px solid $gray3',
     borderRadius: '$circle',

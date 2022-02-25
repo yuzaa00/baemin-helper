@@ -32,10 +32,9 @@ export default function detail() {
     }
   >();
   return (
-    <HStack justifyContent="center" css={{ margin: '$24 $10 94px' }}>
+    <HStack justifyContent="center">
       <VStack
         alignItems="center"
-        gap="16"
         css={{
           width: '100%',
           maxWidth: '640px',
