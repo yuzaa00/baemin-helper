@@ -6,25 +6,26 @@ import { getCssText } from "./styles/stitches.config";
 import ClientStyleContext from "./styles/client.context";
 
 interface ClientCacheProviderProps {
- children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 function ClientCacheProvider({ children }: ClientCacheProviderProps) {
- const [sheet, setSheet] = React.useState(getCssText());
+  const [sheet, setSheet] = React.useState(getCssText());
 
- const reset = React.useCallback(() => {
-   setSheet(getCssText());
- }, []);
+  const reset = React.useCallback(() => {
+    setSheet(getCssText());
+  }, []);
 
- return (
-   <ClientStyleContext.Provider value={{ reset, sheet }}>
-     {children}
-   </ClientStyleContext.Provider>
- );
+  return (
+    <ClientStyleContext.Provider value={{ reset, sheet }}>
+      {children}
+    </ClientStyleContext.Provider>
+  );
 }
 
 hydrate(
-<ClientCacheProvider>
- <RemixBrowser />
- </ClientCacheProvider>
- , document);
+  <ClientCacheProvider>
+    <RemixBrowser />
+  </ClientCacheProvider>,
+  document
+);

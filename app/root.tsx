@@ -15,7 +15,7 @@ import {
 import type { MetaFunction } from 'remix';
 import * as gtag from './lib/gtag';
 
-import ClientStyleContext from "./styles/client.context";
+import ClientStyleContext from './styles/client.context';
 // import { styled } from "./styles/stitches.config";
 
 export const links: LinksFunction = () => {
@@ -81,8 +81,7 @@ const resetStyle = globalCss({
   },
 
   '*': {
-    fontFamily:
-      `'Noto Sans KR', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif`,
+    fontFamily: `'Noto Sans KR', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif`,
     letterSpacing: '-0.01em',
   },
 });
@@ -92,10 +91,7 @@ interface DocumentProps {
   title?: string;
 }
 
-function Document({
-  children,
-  title,
-}: DocumentProps) {
+function Document({ children, title }: DocumentProps) {
   const clientStyleData = useContext(ClientStyleContext);
 
   // Only executed on client
@@ -104,22 +100,17 @@ function Document({
     clientStyleData.reset();
   }, [clientStyleData]);
 
-
-
   return (
     <html lang="ko">
       <head>
-      {title ? <title>{title}</title> : null}
+        {title ? <title>{title}</title> : null}
         <meta charSet="utf-8" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -182,21 +173,18 @@ export function CatchBoundary() {
 
   return (
     <Document title="Uh-oh!">
-      {caught.status === 404
-        && (
-          <>
-            <h2 style={{ textAlign: 'center' }}>
-              앗😓
-            </h2>
-            <h4
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              여긴 아무것도 없어요
-            </h4>
-          </>
-        )}
+      {caught.status === 404 && (
+        <>
+          <h2 style={{ textAlign: 'center' }}>앗😓</h2>
+          <h4
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            여긴 아무것도 없어요
+          </h4>
+        </>
+      )}
     </Document>
   );
 }
@@ -204,12 +192,8 @@ export function CatchBoundary() {
 export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document title="Uh-oh!">
-      <h2 style={{ textAlign: 'center' }}>
-        앗🙀
-      </h2>
-      <h4 style={{ textAlign: 'center' }}>
-        잠시 후에 다시 들어와주시겠어요?
-      </h4>
+      <h2 style={{ textAlign: 'center' }}>앗🙀</h2>
+      <h4 style={{ textAlign: 'center' }}>잠시 후에 다시 들어와주시겠어요?</h4>
     </Document>
   );
 }
