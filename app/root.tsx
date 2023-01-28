@@ -1,6 +1,6 @@
 import { HStack, Text, ToastContainer, VStack } from '@dano-inc/design-system';
 import { globalCss } from '@dano-inc/stitches-react';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useContext, useEffect, useLayoutEffect } from 'react';
 import {
   Links,
   LinksFunction,
@@ -14,6 +14,9 @@ import {
 } from 'remix';
 import type { MetaFunction } from 'remix';
 import * as gtag from './lib/gtag';
+
+import ClientStyleContext from "./styles/client.context";
+// import { styled } from "./styles/stitches.config";
 
 export const links: LinksFunction = () => {
   return [
@@ -84,13 +87,29 @@ const resetStyle = globalCss({
   },
 });
 
+interface DocumentProps {
+  children: React.ReactNode;
+  title?: string;
+}
+
 function Document({
   children,
   title,
-}: { children: React.ReactNode; title?: string }) {
+}: DocumentProps) {
+  const clientStyleData = useContext(ClientStyleContext);
+
+  // Only executed on client
+  useEffect(() => {
+    // reset cache to re-apply global styles
+    clientStyleData.reset();
+  }, [clientStyleData]);
+
+
+
   return (
     <html lang="ko">
       <head>
+      {title ? <title>{title}</title> : null}
         <meta charSet="utf-8" />
         <meta
           name="viewport"
@@ -121,10 +140,17 @@ function Document({
         />
         <Meta />
         <Links />
+        <style
+          id="stitches"
+          dangerouslySetInnerHTML={{ __html: clientStyleData.sheet }}
+          suppressHydrationWarning
+        />
       </head>
       <body>
         {children}
+        {/* todo 얘 역할 뭔지 찾아봐야해 */}
         {process.env.NODE_ENV === 'development' && <LiveReload />}
+        <ScrollRestoration />
       </body>
     </html>
   );
