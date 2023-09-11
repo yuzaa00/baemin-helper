@@ -16,15 +16,20 @@
     "@dano-inc/design-token": "^2.0.0-rc.57",
     "@dano-inc/react-icons": "^2.0.0-rc.57",
     "@dano-inc/stitches-react": "^2.0.0-rc.57",
+    "@radix-ui/react-icons": "^1.3.0",
     "@remix-run/cloudflare-pages": "^1.1.3",
     "@remix-run/react": "^1.1.3",
     "@remix-run/serve": "^1.1.1",
     "@stitches/react": "^1.2.6",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
     "html-to-image": "^1.9.0",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
-    "remix": "^1.1.3"
+    "remix": "^1.1.3",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.2.0",
