@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
-  "license": "",
+  "name": "baemin-helper",
+  "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual -c \"npm run start\"",
@@ -26,7 +26,7 @@
     "html-to-image": "^1.9.0",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
-    "react-copy-to-clipboard": "^5.0.4",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7"
@@ -39,18 +39,12 @@
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^18.0.11",
     "autoprefixer": "^10.4.15",
-    "cross-env": "^7.0.3",
-    "esbuild": "0.13.14",
     "eslint": "^8.38.0",
-    "npm": "^8.4.1",
-    "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.4",
     "wrangler": "^3.1.1"
   },
   "engines": {
     "node": ">=16.13.0"
-  },
-  "sideEffects": false,
-  "main": "dist/worker.js"
+  }
 }
