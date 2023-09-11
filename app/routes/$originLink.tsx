@@ -1,19 +1,14 @@
 import { HStack, Tabs, Text, VStack } from '@dano-inc/design-system';
 import { styled } from '@dano-inc/stitches-react';
-import {
-  LoaderFunction,
-  MetaFunction,
-  Outlet,
-  useNavigate,
-  useParams,
-} from 'remix';
-import { useLoaderData } from 'remix';
+import type { LoaderArgs } from '@remix-run/cloudflare';
+import { Outlet, useNavigate, useParams } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import AppButton from '~/features/common/components/AppButton';
 import ShareButton from '~/features/common/components/ShareButton';
 import Menu from '~/features/menu/components/Menu';
 import { getMenus, MenuData } from '~/getMenu';
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ request, params }: LoaderArgs) => {
   const url = request.url;
   const response = await getMenus(params.originLink!);
 
@@ -25,7 +20,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   };
 };
 
-export const meta: MetaFunction = ({ data }: { data: { data: MenuData } }) => {
+export const meta = ({ data }: { data: { data: MenuData } }) => {
   return {
     title: `배민 메뉴판 - ${data.data.shop_info.Shop_Nm}`,
     'og:title': `${data.data.shop_info.Shop_Nm}`,

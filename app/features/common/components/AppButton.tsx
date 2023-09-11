@@ -1,5 +1,6 @@
-import { Box, Button, HStack, VStack } from '@dano-inc/design-system';
+import { HStack } from '@dano-inc/design-system';
 import { styled } from '@dano-inc/stitches-react';
+import { Button } from '~/components/ui/button';
 
 export interface AppButtonProps {
   originLink: string;
@@ -24,15 +25,6 @@ export default function AppButton({ originLink }: AppButtonProps) {
     >
       <StyledImg src="/images/baemin.png" onClick={handleClick} />
       <Button
-        color="gray"
-        size="large"
-        css={{
-          width: 'fit-content',
-          height: 'fit-content',
-          minHeight: 'fit-content',
-          padding: '$6 $10 !important',
-          background: '#444444',
-        }}
         onClick={handleClick}
       >
         앱에서 보기

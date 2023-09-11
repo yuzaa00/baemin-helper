@@ -1,9 +1,7 @@
-import { HStack, Text, ToastContainer, VStack } from '@dano-inc/design-system';
-import { globalCss } from '@dano-inc/stitches-react';
-import React, { useEffect, useLayoutEffect } from 'react';
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
+import { cssBundleHref } from '@remix-run/css-bundle';
 import {
   Links,
-  LinksFunction,
   LiveReload,
   Meta,
   Outlet,
@@ -11,12 +9,16 @@ import {
   ScrollRestoration,
   useCatch,
   useLocation,
-} from 'remix';
-import type { MetaFunction } from 'remix';
-import * as gtag from './lib/gtag';
+} from '@remix-run/react';
+import React, { useEffect, useLayoutEffect } from 'react';
+
+// import * as gtag from './lib/gtag';
+import styles from './tailwind.css';
 
 export const links: LinksFunction = () => {
   return [
+    { rel: 'stylesheet', href: styles },
+    ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
     {
       rel: 'icon',
       sizes: '16x16',
@@ -59,31 +61,6 @@ export const meta: MetaFunction = () => {
   };
 };
 
-const resetStyle = globalCss({
-  body: { padding: 0, margin: 0 },
-
-  a: {
-    textDecoration: 'none',
-    all: 'unset',
-  },
-
-  'html, body': {
-    minHeight: '100vh',
-  },
-
-  button: {
-    background: 'none',
-    padding: 'none',
-    border: 'none',
-  },
-
-  '*': {
-    fontFamily:
-      `'Noto Sans KR', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif`,
-    letterSpacing: '-0.01em',
-  },
-});
-
 function Document({
   children,
   title,
@@ -96,8 +73,10 @@ function Document({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
+        <Links />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <script
+        {
+          /* <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
         />
@@ -113,14 +92,16 @@ function Document({
             });
           `,
           }}
-        />
-        <script
+        /> */
+        }
+        {
+          /* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2107785439138018"
           crossOrigin="anonymous"
-        />
+        /> */
+        }
         <Meta />
-        <Links />
       </head>
       <body>
         {children}
@@ -131,19 +112,18 @@ function Document({
 }
 
 export default function App() {
-  resetStyle();
   const location = useLocation();
 
   useEffect(() => {
     const handleRouteChange = (url: any) => {
-      gtag.pageview(url);
+      // gtag.pageview(url);
     };
     handleRouteChange(location.pathname + location.search);
   }, [location]);
 
   return (
     <Document>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Outlet />
       <ScrollRestoration />
       <Scripts />
