@@ -2,7 +2,7 @@ import { HStack, Text, VStack } from '@dano-inc/design-system';
 import { LineIconArrowRight } from '@dano-inc/react-icons';
 import { LineIconError } from '@dano-inc/react-icons';
 import { styled } from '@dano-inc/stitches-react';
-import { Link } from 'remix';
+import { Link } from '@remix-run/react';
 import { formatPrice } from '~/features/common/internals/formatPrice';
 import { SingleMenuData } from '~/getMenu';
 

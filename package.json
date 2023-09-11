@@ -4,12 +4,10 @@
   "description": "",
   "license": "",
   "scripts": {
-    "build": "cross-env NODE_ENV=production remix build",
-    "dev": "cross-env NODE_ENV=development run-p dev:*",
-    "postinstall": "remix setup cloudflare-pages",
-    "dev:remix": "remix watch",
-    "dev:wrangler": "wrangler pages dev ./public --watch ./build",
-    "start": "npm run dev:wrangler"
+    "build": "remix build",
+    "dev": "remix dev --manual -c \"npm run start\"",
+    "start": "wrangler pages dev --compatibility-date=2023-06-21 ./public",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@dano-inc/design-system": "^2.0.0-rc.57",
@@ -17,37 +15,41 @@
     "@dano-inc/react-icons": "^2.0.0-rc.57",
     "@dano-inc/stitches-react": "^2.0.0-rc.57",
     "@radix-ui/react-icons": "^1.3.0",
-    "@remix-run/cloudflare-pages": "^1.1.3",
-    "@remix-run/react": "^1.1.3",
-    "@remix-run/serve": "^1.1.1",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@remix-run/cloudflare": "^1.19.3",
+    "@remix-run/cloudflare-pages": "^1.19.3",
+    "@remix-run/css-bundle": "^1.19.3",
+    "@remix-run/react": "^1.19.3",
     "@stitches/react": "^1.2.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "html-to-image": "^1.9.0",
-    "react": "^17.0.2",
+    "isbot": "^3.6.8",
+    "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.0.4",
-    "react-dom": "^17.0.2",
-    "remix": "^1.1.3",
+    "react-dom": "^18.2.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.2.0",
-    "@remix-run/dev": "^1.1.3",
-    "@types/react": "^17.0.24",
+    "@cloudflare/workers-types": "^3.19.0",
+    "@remix-run/dev": "^1.19.3",
+    "@remix-run/eslint-config": "^1.19.3",
+    "@types/react": "^18.0.35",
     "@types/react-copy-to-clipboard": "^5.0.2",
-    "@types/react-dom": "^17.0.9",
+    "@types/react-dom": "^18.0.11",
     "autoprefixer": "^10.4.15",
     "cross-env": "^7.0.3",
     "esbuild": "0.13.14",
+    "eslint": "^8.38.0",
     "npm": "^8.4.1",
     "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.3.3",
-    "typescript": "^4.1.2",
-    "wrangler": "alpha"
+    "typescript": "^5.0.4",
+    "wrangler": "^3.1.1"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16.13.0"
   },
   "sideEffects": false,
   "main": "dist/worker.js"
