@@ -1,6 +1,4 @@
-/**
- * @type {import('@remix-run/dev/config').AppConfig}
- */
+ /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   appDirectory: "app",
   assetsBuildDirectory: "public/build",
@@ -9,5 +7,8 @@ module.exports = {
   serverPlatform: "neutral",
   serverBuildDirectory: "build",
   devServerBroadcastDelay: 1000,
-  ignoredRouteFiles: [".*"]
+  ignoredRouteFiles: [".*"],
+  tailwind: true,
+  postcss: true,
+
 };

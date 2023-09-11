@@ -1,6 +1,7 @@
 import { HStack, Text, ToastContainer, VStack } from '@dano-inc/design-system';
 import { globalCss } from '@dano-inc/stitches-react';
 import React, { useEffect, useLayoutEffect } from 'react';
+import styles from "./tailwind.css"
 import {
   Links,
   LinksFunction,
@@ -17,6 +18,7 @@ import * as gtag from './lib/gtag';
 
 export const links: LinksFunction = () => {
   return [
+    { rel: "stylesheet", href: styles },
     {
       rel: 'icon',
       sizes: '16x16',
