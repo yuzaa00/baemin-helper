@@ -1,8 +1,7 @@
-import { HStack, Tabs, Text, VStack } from '@dano-inc/design-system';
-import { styled } from '@dano-inc/stitches-react';
 import type { LoaderArgs } from '@remix-run/cloudflare';
 import { Outlet, useNavigate, useParams } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import AppButton from '~/features/common/components/AppButton';
 import ShareButton from '~/features/common/components/ShareButton';
 import Menu from '~/features/menu/components/Menu';
@@ -43,92 +42,54 @@ export default function Index() {
   const { detail, option } = useParams();
 
   return (
-    <HStack justifyContent="center" css={{ margin: '$24 $10 94px' }}>
-      <VStack
-        alignItems="center"
-        gap="16"
-        css={{
-          width: '100%',
-          maxWidth: '640px',
-        }}
-      >
+    <div className="h-stack justify-center mt-6 mx-2.5 mb-24">
+      <div className="v-stack items-center gap-4 w-full max-w-2xl">
         {option
           ? <Outlet />
           : (
             <>
-              <HStack pos="relative" css={{ width: '100%' }}>
+              <header className="relative w-full">
                 {/** 가게 이름 */}
-                <VStack alignItems="center">
-                  <Text
-                    variant="heading3"
-                    css={{
-                      '@small': {
-                        maxWidth: '200px',
-                      },
-                      '@medium': {
-                        maxWidth: '300px',
-                      },
-                    }}
-                    textAlign="center"
-                    wordBreak="keepAll"
-                  >
+                <div className="v-stack items-center">
+                  <h3 className="text-2xl font-semibold text-center break-keep w-full max-sm:max-w-[200px]">
                     {shop_info.Shop_Nm}
-                  </Text>
-                </VStack>
+                  </h3>
+                </div>
                 <ShareButton url={url} />
-              </HStack>
-              <HStack css={{ width: '100%' }}>
-                <Tabs.Root
+              </header>
+              <section className="h-stack w-full">
+                <Tabs
                   defaultValue={''}
                   value={detail}
-                  css={{ width: '100%' }}
+                  className="w-full"
                   onValueChange={navigate}
                 >
-                  <StyledTabsList variant="default">
+                  <TabsList className="hide-scrollbar max-w-2xl overflow-scroll w-full">
                     {/** 대표 메뉴 (고정) */}
-                    <Tabs.Trigger value="">대표 메뉴</Tabs.Trigger>
+                    <TabsTrigger value="">대표 메뉴</TabsTrigger>
                     {/** 그 외 메뉴 */}
                     {shop_menu.menu_ord.normal.map((menu, index) => (
-                      <Tabs.Trigger
+                      <TabsTrigger
                         value={menu.Shop_Food_Grp_Seq}
                         key={`tabs-${index}-${menu.Shop_Food_Grp_Nm}`}
                       >
                         {menu.Shop_Food_Grp_Nm}
-                      </Tabs.Trigger>
+                      </TabsTrigger>
                     ))}
-                  </StyledTabsList>
+                  </TabsList>
                   {/** 대표 메뉴 (고정) */}
-                  <Tabs.Content value="" css={{ width: '100%' }}>
+                  <TabsContent value="" className="w-full">
                     {shop_menu.menu_ord.rec.map(menu => (
                       <Menu menu={menu} key={menu.Shop_Food_Seq} isRec />
                     ))}
-                  </Tabs.Content>
+                  </TabsContent>
                   <Outlet />
-                </Tabs.Root>
-              </HStack>
+                </Tabs>
+              </section>
             </>
           )}
         <AppButton originLink={originLink} />
-      </VStack>
-    </HStack>
+      </div>
+    </div>
   );
 }
-
-const StyledTabsList = styled(Tabs.List, {
-  padding: '0 10px 10px',
-  boxShadow: 'none',
-  borderBottom: '0.5px solid #eeeeee',
-  '> button': {
-    border: '1px solid $gray3',
-    borderRadius: '$circle',
-    height: '40px',
-    padding: '0 $12',
-    marginRight: '$8 !important',
-    '&[data-state="active"]': {
-      boxShadow: 'none',
-      color: '$white',
-      backgroundColor: '#444444',
-      border: 'none',
-    },
-  },
-});

@@ -1,10 +1,9 @@
-import { HStack, VStack } from '@dano-inc/design-system';
-import { useLoaderData } from 'remix';
-import type { LoaderFunction, MetaFunction } from 'remix';
+import type { LoaderArgs, MetaFunction } from '@remix-run/cloudflare';
+import { useLoaderData } from '@remix-run/react';
 import MenuOption from '~/features/menu/components/MenuOption';
-import { getMenuOption, SingleMenuData } from '~/getMenu';
+import { getMenuOption } from '~/getMenu';
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const loader = async ({ params, request }: LoaderArgs) => {
   const url = new URL(request.url);
   const isRec = params.detail === 'rec';
 
@@ -19,8 +18,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const meta: MetaFunction = ({
   data,
-}: {
-  data: { data: SingleMenuData };
 }) => {
   return {
     title: `배민 메뉴판 - ${data.data.Shop_Nm}`,
@@ -33,17 +30,10 @@ export default function detail() {
   const { data, url } = useLoaderData();
 
   return (
-    <HStack justifyContent="center" css={{ width: '100%' }}>
-      <VStack
-        alignItems="center"
-        gap="16"
-        css={{
-          width: '100%',
-          maxWidth: '640px',
-        }}
-      >
+    <div className="h-stack justify-center w-full">
+      <div className="v-stack items-center gap-4 w-full max-w-2xl">
         <MenuOption option={data} url={url} />
-      </VStack>
-    </HStack>
+      </div>
+    </div>
   );
 }

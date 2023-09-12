@@ -1,13 +1,8 @@
-import {
-  Box,
-  HDivider,
-  HStack,
-  IconButton,
-  Text,
-  VStack,
-} from '@dano-inc/design-system';
-import { LineIconArrowLeft } from '@dano-inc/react-icons';
-import { useNavigate, useParams } from 'remix';
+import { ChevronLeft } from 'lucide-react';
+import { Separator } from '~/components/ui/separator';
+
+import { useNavigate, useParams } from '@remix-run/react';
+import { Button } from '~/components/ui/button';
 import ShareButton from '~/features/common/components/ShareButton';
 import { formatPrice } from '~/features/common/internals/formatPrice';
 import { SingleMenuData } from '~/getMenu';
@@ -30,63 +25,41 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
   };
 
   return (
-    <VStack gap="16">
-      <HStack pos="relative" css={{ width: '100%' }}>
-        <IconButton
-          pos="absolute"
-          css={{ top: 0, left: 0 }}
+    <div className="v-stack gap-4 w-full">
+      <div className="h-stack relative w-full justify-center">
+        <Button
+          variant="ghost"
+          className="absolute top-0 left-0"
           onClick={handleArrowClick}
         >
-          <LineIconArrowLeft />
-        </IconButton>
-        <VStack alignItems="center">
-          <Text
-            variant="heading3"
-            css={{
-              '@small': {
-                maxWidth: '200px',
-              },
-              '@medium': {
-                maxWidth: '300px',
-              },
-            }}
-            textAlign="center"
-            wordBreak="keepAll"
-            textColor="gray7"
-          >
+          <ChevronLeft strokeWidth={1} />
+        </Button>
+        <div className="v-stack">
+          <h3 className="text-2xl font-semibold text-center break-keep w-full max-sm:max-w-[200px]">
             {option.Food_Nm}
-          </Text>
-        </VStack>
+          </h3>
+        </div>
         <ShareButton url={url} />
-      </HStack>
-      <VStack gap="12" css={{ flex: 1.5 }} px="16">
-        <HStack justifyContent="center">
-          <Text
-            variant="paragraph4"
-            wordBreak="keepAll"
-            textAlign="center"
-          >
+      </div>
+      <div className="v-stack gap-3 flex-[1.5] px-4">
+        <div className="h-stack justify-center">
+          <p className="text-sm break-keep text-center">
             {option.Food_Cont}
-          </Text>
-        </HStack>
+          </p>
+        </div>
         {option.List_Shop_Food_Price_Grp.map((price, index) => (
-          <Box key={`price-${index}-${price.Shop_Food_Seq}`}>
+          <div
+            className="flex"
+            key={`price-${index}-${price.Shop_Food_Price_Grp_Seq}`}
+          >
             {price.Def_Price_Yn === 'Y'
               ? (
-                <VStack>
-                  <HStack py="8" justifyContent="spaceBetween">
-                    <Text
-                      variant="heading6"
-                      wordBreak="keepAll"
-                      textColor="gray7"
-                    >
+                <div className="v-stack w-full">
+                  <div className="h-stack py-2 justify-between">
+                    <h6 className="font-semibold break-keep">
                       {price.Shop_Food_Price_Grp_Nm}
-                    </Text>
-                    <Text
-                      variant="paragraph1"
-                      wordBreak="keepAll"
-                      textColor="gray7"
-                    >
+                    </h6>
+                    <p className="break-keep">
                       {`${
                         formatPrice(
                           parseInt(
@@ -95,80 +68,66 @@ export default function MenuOption({ option, url }: MenuOptionProps) {
                           ),
                         )
                       } 원`}
-                    </Text>
-                  </HStack>
-                  <HDivider />
-                </VStack>
+                    </p>
+                  </div>
+                  <Separator />
+                </div>
               )
               : (
-                <VStack gap="10">
-                  <HStack pt="10" alignItems="center">
-                    <Text
-                      variant="heading6"
-                      wordBreak="keepAll"
-                      mr="6"
-                      textColor="gray7"
-                    >
+                <div className="v-stack gap-2.5">
+                  <div className="h-stack pt-2.5 items-center">
+                    <h6 className="break-keep mr-1.5 font-semibold">
                       {price.Shop_Food_Price_Grp_Nm}
-                    </Text>
+                    </h6>
                     {Number(price.Min_Sel) > 0 && (
-                      <Text
-                        variant="small"
-                        mr="4"
-                        textColor="error"
-                      >
+                      <p className="text-xs mr-1 text-red-500">
                         {`필수 ${price.Min_Sel}개`}
-                      </Text>
+                      </p>
                     )}
                     {Number(price.Min_Sel) !== Number(price.Max_Sel) && (
-                      <Text variant="small">{`최대 ${price.Max_Sel}개`}</Text>
+                      <p className="text-xs">{`최대 ${price.Max_Sel}개`}</p>
                     )}
-                  </HStack>
-                  <VStack gap="4" css={{ flex: 2 }}>
+                  </div>
+                  <div className="v-stack gap-1 flex-[2]">
                     {price.List_Shop_Food_Price.map(subPrice => (
-                      <VStack key={subPrice.Shop_Food_Price_Seq}>
-                        <HStack py="8">
-                          <HStack css={{ flex: 1 }} alignItems="center">
-                            <Text
-                              variant="paragraph2"
-                              wordBreak="keepAll"
-                              textColor="gray6"
-                            >
+                      <div
+                        className="v-stack"
+                        key={subPrice.Shop_Food_Price_Seq}
+                      >
+                        <div className="h-stack py-2">
+                          <div className="h-stack flex-[1] items-center">
+                            <p className="break-keep">
                               {subPrice.Food_Price_Nm}
-                            </Text>
+                            </p>
                             {subPrice.Sold_Out && (
-                              <Text
-                                variant="paragraph4"
-                                textColor="error"
-                                ml={price.Def_Price_Yn === 'N'
-                                  ? '8'
-                                  : undefined}
+                              <p
+                                className={`text-red-500 ml-${
+                                  price.Def_Price_Yn === 'N'
+                                    ? '8'
+                                    : undefined
+                                }`}
                               >
                                 품절
-                              </Text>
+                              </p>
                             )}
-                          </HStack>
-                          <Text
-                            variant="paragraph2"
-                            wordBreak="keepAll"
-                            textColor="gray6"
-                          >
+                          </div>
+                          <p className="break-keep">
                             {`+ ${
                               formatPrice(
                                 parseInt(subPrice.Food_Price, 10),
                               )
                             } 원`}
-                          </Text>
-                        </HStack>
-                        <HDivider />
-                      </VStack>
+                          </p>
+                        </div>
+                        <Separator />
+                      </div>
                     ))}
-                  </VStack>
-                </VStack>
+                  </div>
+                </div>
               )}
-          </Box>
+          </div>
         ))}
-      </VStack>
-    </VStack>
+      </div>
+    </div>
   );
 }

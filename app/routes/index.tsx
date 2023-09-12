@@ -1,18 +1,11 @@
-import { HStack, Text, VStack } from '@dano-inc/design-system';
-
 export default function Index() {
   return (
-    <HStack justifyContent="center" css={{ margin: '$24 $10 $48' }}>
-      <VStack
-        alignItems="center"
-        gap="16"
-        css={{
-          width: '100%',
-          maxWidth: '640px',
-        }}
-      >
-        <Text variant="heading2">여기는 아무것도 없어요..😆</Text>
-      </VStack>
-    </HStack>
+    <div className="h-stack justify-center mt-20">
+      <div className="v-stack items-center max-w-2xl">
+        <h3 className="text-2xl font-semibold">
+          / 뒤에 식당 코드를 넣어주세요
+        </h3>
+      </div>
+    </div>
   );
 }

@@ -1,8 +1,7 @@
 /** @type {import('@remix-run/dev').AppConfig} */
-module.exports = {
+export default {
   tailwind: true,
   postcss: true,
-
   devServerBroadcastDelay: 1000,
   ignoredRouteFiles: ['**/.*'],
   server: './server.ts',
@@ -18,10 +17,10 @@ module.exports = {
   publicPath: '/build/',
   future: {
     v2_dev: true,
-    v2_errorBoundary: true,
-    v2_headers: true,
+    v2_errorBoundary: false,
+    v2_headers: false,
     v2_meta: false,
-    v2_normalizeFormMethod: true,
-    v2_routeConvention: true,
+    v2_normalizeFormMethod: false,
+    v2_routeConvention: false,
   },
 };

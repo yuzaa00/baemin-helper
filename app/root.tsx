@@ -10,15 +10,25 @@ import {
   useCatch,
   useLocation,
 } from '@remix-run/react';
-import React, { useEffect, useLayoutEffect } from 'react';
-
-// import * as gtag from './lib/gtag';
+import React, { useEffect } from 'react';
+import { Toaster } from '~/components/ui/toaster';
 import styles from './tailwind.css';
 
 export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: styles },
     ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.googleapis.com',
+      crossOrigin: 'use-credentials',
+    },
+    {
+      rel: 'stylesheet',
+      href:
+        'https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap',
+    },
     {
       rel: 'icon',
       sizes: '16x16',
@@ -123,7 +133,7 @@ export default function App() {
 
   return (
     <Document>
-      {/* <ToastContainer /> */}
+      <Toaster />
       <Outlet />
       <ScrollRestoration />
       <Scripts />
@@ -155,7 +165,8 @@ export function CatchBoundary() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
+export function ErrorBoundary(error: any) {
+  console.error({ error });
   return (
     <Document title="Uh-oh!">
       <h2 style={{ textAlign: 'center' }}>

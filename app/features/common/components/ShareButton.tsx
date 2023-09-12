@@ -1,22 +1,23 @@
-import { IconButton } from '@dano-inc/design-system';
-import { LineIconShare } from '@dano-inc/react-icons';
+import { Share } from 'lucide-react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { toast } from '@dano-inc/design-system';
+import { Button } from '~/components/ui/button';
+import { useToast } from '~/components/ui/use-toast';
 
 export interface ShareButtonProps {
   url: string;
 }
 
 export default function ShareButton({ url }: ShareButtonProps) {
+  const { toast } = useToast();
   const handleCopy = () => {
-    toast.show('링크가 복사되었습니다!');
+    toast({ description: '링크가 복사되었습니다!' });
   };
 
   return (
     <CopyToClipboard text={`${url}/?utm_source=copy_link`} onCopy={handleCopy}>
-      <IconButton pos='absolute' css={{ top: 0, right: 0 }}>
-        <LineIconShare />
-      </IconButton>
+      <Button variant="ghost" className="absolute top-0 right-0">
+        <Share strokeWidth={1} />
+      </Button>
     </CopyToClipboard>
   );
 }
