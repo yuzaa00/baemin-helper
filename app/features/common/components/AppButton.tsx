@@ -1,5 +1,3 @@
-import { HStack } from '@dano-inc/design-system';
-import { styled } from '@dano-inc/stitches-react';
 import { Button } from '~/components/ui/button';
 
 export interface AppButtonProps {
@@ -11,30 +9,17 @@ export default function AppButton({ originLink }: AppButtonProps) {
     window.open(`https://baemin.me/${originLink}`);
   };
   return (
-    <HStack
-      justifyContent="spaceBetween"
-      alignItems="center"
-      pos="fixed"
-      p="16"
-      css={{
-        width: '100%',
-        bottom: 0,
-        maxWidth: '640px',
-        background: 'linear-gradient(rgba(255, 255, 255, 0), $white)',
-      }}
-    >
-      <StyledImg src="/images/baemin.png" onClick={handleClick} />
+    <div className="h-stack justify-between items-center fixed p-4 w-full bottom-0 max-w-2xl bg-gradient-to-b from-white/0 to-white">
+      <img
+        className="rounded-lg w-16 cursor-pointer"
+        src="/images/baemin.png"
+        onClick={handleClick}
+      />
       <Button
         onClick={handleClick}
       >
         앱에서 보기
       </Button>
-    </HStack>
+    </div>
   );
 }
-
-const StyledImg = styled('img', {
-  borderRadius: '$medium',
-  width: '60px',
-  cursor: 'pointer',
-});

@@ -1,10 +1,10 @@
-import { HStack, VStack } from '@dano-inc/design-system';
-import { useLoaderData } from 'remix';
-import type { LoaderFunction, MetaFunction } from 'remix';
+import type { LoaderArgs, MetaFunction } from '@remix-run/cloudflare';
+import { useLoaderData } from '@remix-run/react';
+
 import Menu from '~/features/menu/components/Menu';
 import { getMenu, NormalMenus } from '~/getMenu';
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const loader = async ({ params, request }: LoaderArgs) => {
   const url = request.url;
   const response = await getMenu(params.originLink!, params.detail!);
 
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export const meta: MetaFunction = (
-  { data }: { data: { data: NormalMenus } },
+  { data },
 ) => {
   return {
     title: `배민 메뉴판 - ${data.data.Shop_Nm}`,
@@ -32,18 +32,12 @@ export default function detail() {
     }
   >();
   return (
-    <HStack justifyContent="center">
-      <VStack
-        alignItems="center"
-        css={{
-          width: '100%',
-          maxWidth: '640px',
-        }}
-      >
+    <div className="h-stack justify-center">
+      <div className="v-stack items-center w-full max-w-2xl">
         {data.List_Shop_Food.map((menu, i) => (
           <Menu menu={menu} key={`${i.toString()}-${menu.Shop_Food_Seq}`} />
         ))}
-      </VStack>
-    </HStack>
+      </div>
+    </div>
   );
 }

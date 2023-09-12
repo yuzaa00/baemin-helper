@@ -1,8 +1,6 @@
-import { HStack, Text, VStack } from '@dano-inc/design-system';
-import { LineIconArrowRight } from '@dano-inc/react-icons';
-import { LineIconError } from '@dano-inc/react-icons';
-import { styled } from '@dano-inc/stitches-react';
 import { Link } from '@remix-run/react';
+import { AlertCircle, ChevronRight } from 'lucide-react';
+import { Badge } from '~/components/ui/badge';
 import { formatPrice } from '~/features/common/internals/formatPrice';
 import { SingleMenuData } from '~/getMenu';
 
@@ -13,82 +11,55 @@ export interface MenuProps {
 
 export default function Menu({ menu, isRec }: MenuProps) {
   return (
-    <VStack css={{ width: '100%' }}>
+    <section className="v-stack w-full">
       <Link
         to={isRec
           ? `rec/${menu.Shop_Food_Seq}`
           : `${menu.Shop_Food_Seq}`}
       >
-        <VStack
-          p="10"
-          css={{
-            width: '100%',
-            borderBottom: '1px solid $gray2',
-            cursor: 'pointer',
-          }}
-        >
-          <HStack gap="12" alignItems="center">
+        <div className="v-stack w-full p-2.5 cursor-pointer border-b border-solid border-secondary">
+          <div className="h-stack gap-3 items-center">
             {/** 이미지 */}
             {menu.Img_Url && (
-              <VStack
-                css={{ flex: 0.8, alignSelf: 'flex-start', minWidth: 0 }}
-              >
-                <StyledImg
+              <div className="v-stack flex-[0.8] self-start min-w-0">
+                <img
+                  className="flex w-full rounded-md"
                   src={menu.Img_Url}
                 />
-              </VStack>
+              </div>
             )}
-            <VStack
-              gap="4"
-              css={{ flex: 1.5, minWidth: 0 }}
-              justifyContent="center"
-            >
+            <div className="v-stack justify-center gap-1 flex-[1.5] min-w-0 ">
               {/** 메뉴명 */}
-              <Text variant="heading6" wordBreak="keepAll" textColor="gray7">
+              <h4 className="break-keep text-lg font-medium text-primary">
                 {menu.Food_Nm}
-              </Text>
+              </h4>
               {/** 품절 여부 */}
               {menu.Sold_Out && (
-                <HStack gap="4" alignItems="center">
-                  <LineIconError color="#f04838" fontSize="12" />
-                  <Text variant="small" textColor="error">
+                <div className="h-stack gap-1 items-center">
+                  <AlertCircle color="#f04838" strokeWidth={3} size={14} />
+                  <p className="text-xs text-red-500">
                     품절되었어요
-                  </Text>
-                </HStack>
+                  </p>
+                </div>
               )}
               {/** 메뉴 설명 */}
               {menu.Food_Cont && (
-                <Text
-                  variant="paragraph3"
-                  wordBreak="keepAll"
-                  textColor="gray4"
-                  css={{
-                    whiteSpace: 'break-spaces',
-                    visibility: 'visible',
-                    wordBreak: 'break-all',
-                    maxHeight: '45px',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: '-webkit-box',
-                    '-webkit-line-clamp': 2,
-                    '-webkit-box-orient': 'vertical',
-                  }}
-                >
+                <p className="text-sm text-gray-400  max-h-[45px] whitespace-break-spaces break-keep two-line-ellipsis">
                   {menu.Food_Cont}
-                </Text>
+                </p>
               )}
               {/** 가격 정보 */}
-              <HStack>
+              <div className="h-stack">
                 {menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
                   .Food_Price_Nm
                   && !isRec && (
-                  <Text variant="paragraph1" wordBreak="keepAll">
+                  <p className="text-md break-keep">
                     {menu.List_Shop_Food_Price_Grp[0].List_Shop_Food_Price[0]
                       .Food_Price_Nm}
                     &nbsp; : &nbsp;
-                  </Text>
+                  </p>
                 )}
-                <Text variant="paragraph1" wordBreak="keepAll">
+                <p className="text-md break-keep">
                   {`${
                     formatPrice(
                       parseInt(
@@ -98,54 +69,34 @@ export default function Menu({ menu, isRec }: MenuProps) {
                       ),
                     )
                   }원`}
-                </Text>
-              </HStack>
+                </p>
+              </div>
               {/** 대표, 1인분 태그 정보 */}
-              <HStack gap="4">
+              <div className="h-stack g-1">
                 {menu.Solo && (
-                  <Text
-                    variant="small"
-                    css={{
-                      background: '#F0EEE9',
-                      color: '#A9805B',
-                      width: 'fit-content',
-                      padding: '2px 5px',
-                      borderRadius: '$xsmall',
-                    }}
-                    textAlign="center"
+                  <Badge
+                    variant="secondary"
+                    className="bg-[#F0EEE9] text-[#A9805B] rounded-md"
                   >
                     1인분
-                  </Text>
+                  </Badge>
                 )}
                 {menu.representative && (
-                  <Text
-                    variant="small"
-                    css={{
-                      background: '#F0EEE9',
-                      color: '#A9805B',
-                      width: 'fit-content',
-                      padding: '2px 5px',
-                      borderRadius: '$xsmall',
-                    }}
-                    textAlign="center"
+                  <Badge
+                    variant="secondary"
+                    className="bg-[#F0EEE9] text-[#A9805B] rounded-md"
                   >
                     대표
-                  </Text>
+                  </Badge>
                 )}
-              </HStack>
-            </VStack>
-            <VStack css={{ flex: 0.1, minWidth: 0 }}>
-              <LineIconArrowRight />
-            </VStack>
-          </HStack>
-        </VStack>
+              </div>
+            </div>
+            <div className="v-stack flex-0 min-w-0">
+              <ChevronRight strokeWidth={1} />
+            </div>
+          </div>
+        </div>
       </Link>
-    </VStack>
+    </section>
   );
 }
-
-const StyledImg = styled('img', {
-  borderRadius: '$small',
-  display: 'flex',
-  width: '100%',
-});
