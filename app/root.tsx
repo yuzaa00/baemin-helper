@@ -84,33 +84,6 @@ function Document({
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
         <Links />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        {
-          /* <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
-          }}
-        /> */
-        }
-        {
-          /* <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2107785439138018"
-          crossOrigin="anonymous"
-        /> */
-        }
         <Meta />
       </head>
       <body>
