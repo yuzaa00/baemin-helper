@@ -35,7 +35,10 @@ export default function detail() {
     <div className="h-stack justify-center">
       <div className="v-stack items-center w-full max-w-2xl">
         {data.List_Shop_Food.map((menu, i) => (
-          <Menu menu={menu} key={`${i.toString()}-${menu.Shop_Food_Seq}`} />
+          <Menu
+            menu={menu}
+            key={`${menu.Shop_Food_Grp_Seq}-${menu.Shop_Food_Seq}`}
+          />
         ))}
       </div>
     </div>
