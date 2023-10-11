@@ -1,3 +1,4 @@
+/** 배민 서버 인터페이스 */
 export interface SingleMenuData {
   Shop_Food_Seq: string;
   Shop_Food_Grp_Seq: string;
@@ -89,6 +90,7 @@ export interface MenuListApiResponse {
   status: string;
 }
 
+/** 프론트 인터페이스 */
 export interface Menu {
   foodId: string;
   foodName: string;
