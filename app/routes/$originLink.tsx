@@ -59,7 +59,7 @@ export default function Index() {
               <section className="h-stack w-full">
                 <Tabs
                   defaultValue={''}
-                  value={detail}
+                  value={detail || ''}
                   className="w-full"
                   onValueChange={navigate}
                 >
