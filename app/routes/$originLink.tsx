@@ -11,9 +11,8 @@ export const loader = async ({ request, params }: LoaderArgs) => {
   const url = request.url;
   const response = await getMenus(params.originLink!);
 
-  if (response.status !== 'SUCCESS') throw Error;
   return {
-    data: response.data,
+    data: response,
     url,
     originLink: params.originLink,
   };
@@ -80,7 +79,11 @@ export default function Index() {
                   {/** 대표 메뉴 (고정) */}
                   <TabsContent value="" className="w-full">
                     {shop_menu.menu_ord.rec.map(menu => (
-                      <Menu menu={menu} key={menu.Shop_Food_Seq} isRec />
+                      <Menu
+                        menu={menu}
+                        key={`${menu.Shop_Food_Grp_Seq}-${menu.Shop_Food_Seq}`}
+                        isRec
+                      />
                     ))}
                   </TabsContent>
                   <Outlet />

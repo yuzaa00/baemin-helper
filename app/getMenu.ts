@@ -1,12 +1,15 @@
-import { MenuProps } from './features/menu/components/Menu';
 import { getShopId } from './getShopId';
+import { menuApi } from './lib/api';
 
 export interface SingleMenuData {
   Shop_Food_Seq: string;
   Shop_Food_Grp_Seq: string;
-  Food_Nm: string; // 음식명
-  Shop_Nm: string; // 음식점명
-  Food_Cont: string; // 설명
+  /** 음식명 */
+  Food_Nm: string;
+  /** 음식점명 */
+  Shop_Nm: string;
+  /** 설명 */
+  Food_Cont: string;
   Images: [{
     order: number;
     Image_Detail: {
@@ -89,10 +92,12 @@ export interface Menus {
   status: string;
 }
 
-export const getMenus = async (params: string): Promise<Menus> => {
+let menus: MenuData;
+
+export const getMenus = async (params: string): Promise<MenuData> => {
   const shopId = await getShopId(params);
 
-  const response = await fetch(
+  const response = await menuApi.get(
     `https://shopdp-api.baemin.com/v8/shop/${shopId}/detail?adid=00000000-0000-0000-0000-000000000000&appver=11.13.1&campaignId=-1&carrier=45008&defaultreview=N&deviceModel=iPhone14%2C2&displayGroup=DEFAULT&dvc_uniq_id=6F456646-3497-4DF2-9663-1CBFA9215597&dvcid=OPUD70CB790C-F9A0-409F-98EF-2D5E5C064508&filter=&lat=37.54241331543683&lat4Distance=37.54241331543683&lng=126.9403147496142&lng4Distance=126.9403147496142&mem=151202002322`,
     {
       headers: {
@@ -101,21 +106,23 @@ export const getMenus = async (params: string): Promise<Menus> => {
       },
     },
   );
-
-  return response.json();
+  menus = response.data;
+  return menus;
 };
 
 export const getMenu = async (
   originLink: string,
   menuId: string,
 ) => {
-  const response = await getMenus(originLink);
+  if (!menus) {
+    menus = await getMenus(originLink);
+  }
 
   return {
-    ...response.data.shop_menu.menu_ord.normal.find((menus) =>
+    ...menus.shop_menu.menu_ord.normal.find((menus) =>
       menus.Shop_Food_Grp_Seq === menuId
     ),
-    Shop_Nm: response.data.shop_info.Shop_Nm,
+    Shop_Nm: menus.shop_info.Shop_Nm,
   };
 };
 
@@ -127,22 +134,23 @@ export const getMenuOption = async (
 ) => {
   if (!params || !option) return;
 
-  console.log(12345);
-  const response = await getMenus(originLink);
+  if (!menus) {
+    menus = await getMenus(originLink);
+  }
 
   if (isRec) {
     return {
-      ...response.data.shop_menu.menu_ord.rec.find(
+      ...menus.shop_menu.menu_ord.rec.find(
         menu => menu.Shop_Food_Seq === option,
       ),
-      Shop_Nm: response.data.shop_info.Shop_Nm,
+      Shop_Nm: menus.shop_info.Shop_Nm,
     };
   }
 
   return {
-    ...response.data.shop_menu.menu_ord.normal
+    ...menus.shop_menu.menu_ord.normal
       .find(option => option.Shop_Food_Grp_Seq === params)
       ?.List_Shop_Food.find(menu => menu.Shop_Food_Seq === option),
-    Shop_Nm: response.data.shop_info.Shop_Nm,
+    Shop_Nm: menus.shop_info.Shop_Nm,
   };
 };
